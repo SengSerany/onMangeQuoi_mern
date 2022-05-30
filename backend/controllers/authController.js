@@ -50,7 +50,11 @@ const createAuthAccount = asyncHandler(async (req, res) => {
 
 // New user session
 const newAuthSession = asyncHandler(async (req, res) => {
-  res.status(200).json({ entryPoint: 'new login' });
+  const isAuthorised = req.query.auth;
+  res.status(200).json({
+    entryPoint: 'new login',
+    auth: isAuthorised && 'You must be logged',
+  });
 });
 
 // Create user session
