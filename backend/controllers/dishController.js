@@ -1,13 +1,16 @@
 const asyncHandler = require('express-async-handler');
+const Dish = require('../models/dishModel');
 
 // Index
 const indexDishes = asyncHandler(async (req, res) => {
-  res.status(200).json({ entre_point: 'Index dishes' });
+  const dishes = await Dish.find();
+  res.status(200).json({ entre_point: 'Index dishes', dishes });
 });
 
 // Show
 const showDish = asyncHandler(async (req, res) => {
-  res.status(200).json({ entre_point: 'Show dish' });
+  const currentDish = await Dish.findById(req.params.id);
+  res.status(200).json({ entre_point: 'Show dish', currentDish });
 });
 
 // New
@@ -17,26 +20,36 @@ const newDish = asyncHandler(async (req, res) => {
 
 // Create
 const createDish = asyncHandler(async (req, res) => {
-  if (!req.body.dish) {
-    res.status(400);
-    throw new Error('All field must be completed');
-  }
-  res.status(200).json({ entre_point: 'Create dish' });
+  const newDish = await Dish.create(req.body);
+  res.status(200).json({ entryPoint: 'create dish', ...newDish._doc });
 });
 
 // Edit
 const editDish = asyncHandler(async (req, res) => {
-  res.status(200).json({ entre_point: 'Edit dish' });
+  const currentDish = await Dish.findById(req.params.id);
+  res.status(200).json({ entre_point: 'Edit dish', currentDish });
 });
 
 // Update
 const updateDish = asyncHandler(async (req, res) => {
-  res.status(200).json({ entre_point: 'Update dish' });
+  const currentDish = await Dish.findById(req.params.id);
+  const updatedDish = await Dish.findByIdAndUpdate(currentDish._id, req.body, {
+    new: true,
+  });
+  res.status(200).json({ entre_point: 'Update dish', updatedDish });
 });
 
 // Delete
 const deleteDish = asyncHandler(async (req, res) => {
-  res.status(200).json({ entre_point: 'Delete dish' });
+  const currentDish = await Dish.findById(req.params.id);
+  currentDish.remove();
+  res
+    .status(200)
+    .json({
+      entre_point: 'Delete dish',
+      id: currentDish._id,
+      name: currentDish.name,
+    });
 });
 
 module.exports = {
