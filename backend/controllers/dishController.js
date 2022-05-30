@@ -15,6 +15,10 @@ const newDish = (req, res) => {
 
 // Create
 const createDish = (req, res) => {
+  if (!req.body.dish) {
+    res.status(400);
+    throw new Error('All field must be completed');
+  }
   res.status(200).json({ entre_point: 'Create dish' });
 };
 
