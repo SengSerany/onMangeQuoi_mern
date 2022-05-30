@@ -20,7 +20,11 @@ const newDish = asyncHandler(async (req, res) => {
 
 // Create
 const createDish = asyncHandler(async (req, res) => {
-  const newDish = await Dish.create(req.body);
+  const currentUser = req.user;
+  const newDish = await Dish.create({
+    authID: currentUser._id,
+    ...req.body,
+  });
   res.status(200).json({ entryPoint: 'create dish', ...newDish._doc });
 });
 
@@ -43,13 +47,11 @@ const updateDish = asyncHandler(async (req, res) => {
 const deleteDish = asyncHandler(async (req, res) => {
   const currentDish = await Dish.findById(req.params.id);
   currentDish.remove();
-  res
-    .status(200)
-    .json({
-      entre_point: 'Delete dish',
-      id: currentDish._id,
-      name: currentDish.name,
-    });
+  res.status(200).json({
+    entre_point: 'Delete dish',
+    id: currentDish._id,
+    name: currentDish.name,
+  });
 });
 
 module.exports = {

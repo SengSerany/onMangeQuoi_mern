@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const DishSchema = new mongoose.Schema(
   {
+    authID: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Auth',
+    },
     name: {
       type: String,
       required: true,
