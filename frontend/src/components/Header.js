@@ -1,14 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 
 function Header() {
   const navigate = useNavigate();
-  let user;
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <>
-      {user && (
+      {user.id !== null && (
         <header>
           <button onClick={() => navigate(-1)}>
             <BiLeftArrowAlt className="header-icons secondary" />
