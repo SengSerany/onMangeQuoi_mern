@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Oswald',
-    'Tiro Devanagari Sanskrit';
+  font-family: 'Tiro Devanagari Sanskrit', serif, -apple-system,
+    BlinkMacSystemFont;
+  font-size: 0.85rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -9,11 +10,19 @@ body {
 .container {
   padding: 1rem;
   height: 85vh;
-  border: 1px solid;
+  display: flex;
+  flex-direction: column;
 }
 
 .d-none {
   display: none;
+}
+
+h1 {
+  font-size: 2rem;
+  font-family: 'Oswald', sans-serif;
+  margin: auto;
+  margin-bottom: 1rem;
 }
 
 header {
@@ -43,4 +52,56 @@ header a {
 
 .header-icons.secondary {
   font-size: 2rem;
+  width: 100%;
+}
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.auth-logo {
+  height: 8rem;
+  margin: 1rem auto auto auto;
+}
+
+input {
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  width: 90%;
+  padding: 1em;
+  line-height: 1.4;
+  background-color: #ffffff;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid #e5e5e5;
+  border-left: none;
+  border-radius: 3px;
+  -webkit-transition: 0.35s ease-in-out;
+  -moz-transition: 0.35s ease-in-out;
+  -o-transition: 0.35s ease-in-out;
+  transition: 0.35s ease-in-out;
+  transition: all 0.35s ease-in-out;
+  margin-bottom: 0.5rem;
+}
+input:focus {
+  outline: 0;
+  border-bottom: solid #ffd007;
+}
+input:focus + .input-icon i {
+  color: #ffd007;
+}
+input:focus + .input-icon:after {
+  border-right-color: #ffd007;
+}
+
+form button {
+  border: none;
+  width: 100%;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  padding: 0.75rem;
+  color: #686868;
+  background-color: #ffd007;
 }

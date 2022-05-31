@@ -1,7 +1,12 @@
+import AuthHeadForm from '../components/AuthHeadForm';
+import AuthForm from '../components/AuthForm';
+
 function Register() {
+  const pageTitle = "S'inscrire";
   return (
-    <div>
-      <h1>Register</h1>
+    <div className="auth-page">
+      <AuthHeadForm title={pageTitle} />
+      <AuthForm title={pageTitle} />
     </div>
   );
 }
