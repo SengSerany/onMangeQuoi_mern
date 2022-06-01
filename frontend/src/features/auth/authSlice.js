@@ -62,6 +62,24 @@ export const login = createAsyncThunk(
   }
 );
 
+// Retrieve user
+export const retrieveUser = createAsyncThunk(
+  'auth/getUser',
+  async (_, thunkAPI) => {
+    try {
+      return await authService.getUser();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Logout
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
@@ -95,7 +113,8 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.message = 'You have been registered, you can now log in';
+        state.message =
+          'Ton inscription est validé, tu peux te connecter maintenant !';
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
@@ -113,12 +132,35 @@ export const authSlice = createSlice({
           username: action.payload.user.username,
           email: action.payload.user.email,
         };
-        state.message = `You are connected ${action.payload.user.username}`;
+        state.message = `tu es bien connecté ${action.payload.user.username}`;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(retrieveUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(retrieveUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = {
+          id: action.payload.user._id,
+          username: action.payload.user.username,
+          email: action.payload.user.email,
+        };
+      })
+      .addCase(retrieveUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isUnlogged = true;
+        state.user = { id: null, username: null };
+        state.message = "Tu t'es bien déconnecté";
       });
   },
 });

@@ -16,6 +16,12 @@ const login = async (userData) => {
   return response.data;
 };
 
+// Get user
+const getUser = async () => {
+  const response = await axios.get(`${API_URL}/profile`);
+  return response.data;
+};
+
 // Log out
 const logout = async () => {
   const response = await axios.delete(`${API_URL}/logout`);
@@ -25,6 +31,7 @@ const logout = async () => {
 const authService = {
   register,
   login,
+  getUser,
   logout,
 };
 
