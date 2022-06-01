@@ -5,7 +5,6 @@ body {
   font-size: 0.85rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ffd007;
 }
 
 .page-container {
@@ -15,9 +14,12 @@ body {
   flex-direction: column;
 }
 
-.bg-white {
+.full-screen {
   height: 100vh;
-  background-color: #ffffff;
+}
+
+.bg-yellow {
+  background-color: #ffd007;
 }
 
 .d-none {
@@ -32,9 +34,14 @@ h1 {
 }
 
 header {
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+header.on-profile {
+  align-items: start;
 }
 
 header button {
@@ -52,8 +59,16 @@ header a {
   text-align: center;
 }
 
+header.on-profile a.header-link-profile {
+  font-size: 2rem;
+}
+
 .header-icons.primary {
   font-size: 3rem;
+}
+
+header.on-profile a.header-link-profile .header-icons.primary {
+  font-size: 7rem;
 }
 
 .header-icons.secondary {
@@ -124,6 +139,39 @@ a .auth-redirect-button {
 .auth-page.login form button {
   color: #e5e5e5;
   background-color: #000000;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-page h3 {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.02rem;
+  margin-bottom: 0.25rem;
+}
+
+.profile-page p {
+  margin-top: 0.25rem;
+}
+
+.btn-profile {
+  width: 80%;
+  margin: 0.2rem;
+}
+.btn-profile.bg-yellow button {
+  color: #383838;
+  background-color: #ffd007;
+}
+
+.btn-disconnect {
+  border: none;
+  padding: 0.75rem;
+  color: #dfdfdf;
+  background-color: #000000d5;
 }
 
 .lds-ellipsis {

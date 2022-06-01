@@ -12,14 +12,10 @@ function AuthToasts() {
     (state) => state.auth
   );
   useEffect(() => {
-    if (isUnlogged) {
-      navigate('/');
-    }
-
-    if (isSuccess) {
+    if (isSuccess || isUnlogged) {
       if (location.pathname === '/login') {
         navigate('/');
-      } else if (location.pathname === '/register') {
+      } else if (location.pathname === '/register' || isUnlogged) {
         navigate('/login');
       }
       toast.success(message);
