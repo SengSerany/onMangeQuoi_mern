@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Profile from './pages/Profile';
 import DishIndex from './pages/dish/DishIndex';
 import DishShow from './pages/dish/DishShow';
+import DishNew from './pages/dish/DishNew';
 import AuthToasts from './components/AuthToasts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/dishes/:id" element={<DishShow />} />
+            <Route exact path="/dishes/new" element={<DishNew />} />
             <Route exact path="/dishes" element={<DishIndex />} />
           </Routes>
         </div>

@@ -70,7 +70,16 @@ function DishShow() {
           <div className="space-behind-fixed-button"></div>
         </div>
       </div>
-      <FixedActionButton />
+      <FixedActionButton
+        actions={[
+          { role: '', roleDescription: 'Modifier le plat', css: 'edit' },
+          {
+            role: '',
+            roleDescription: 'Ajouter le plat a un menu',
+            css: 'add',
+          },
+        ]}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { login, register } from '../features/auth/authSlice';
 import AuthRedirectButton from './AuthRedirectButton';
+import Spinner from '../components/Spinner';
 
 function AuthForm({ title }) {
   const dispatch = useDispatch();
@@ -48,17 +49,12 @@ function AuthForm({ title }) {
   };
 
   if (isLoading) {
-    <div className="lds-ellipsis">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>;
+    return <Spinner />;
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmit}>
         {location.pathname === '/register' && (
           <input
             type="text"
