@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { retrieveUser } from '../features/auth/authSlice';
 import AuthRedirectButton from '../components/AuthRedirectButton';
@@ -6,16 +6,19 @@ import AuthRedirectButton from '../components/AuthRedirectButton';
 function Profile() {
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.auth);
+  const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
+    if (isRead) return;
+    setIsRead(true);
     if (user.id !== null && !user.email) {
       dispatch(retrieveUser());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+  }, []);
 
   if (isLoading) {
-    <div class="lds-ellipsis">
+    <div className="lds-ellipsis">
       <div></div>
       <div></div>
       <div></div>

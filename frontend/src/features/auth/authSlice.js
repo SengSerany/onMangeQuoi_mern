@@ -144,7 +144,6 @@ export const authSlice = createSlice({
       })
       .addCase(retrieveUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
         state.user = {
           id: action.payload.user._id,
           username: action.payload.user.username,
