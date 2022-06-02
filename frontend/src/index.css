@@ -7,8 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: none;
+}
+
 .page-container {
-  padding: 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
   height: 85vh;
   display: flex;
   flex-direction: column;
@@ -52,7 +56,6 @@ header button {
 
 header a {
   color: #b4b4b4;
-  text-decoration: none;
 }
 
 .header-link-profile {
@@ -174,6 +177,102 @@ a .auth-redirect-button {
   background-color: #000000d5;
 }
 
+.dish-card-index {
+  padding: 0.05rem 1rem;
+  margin: 0.2rem 0;
+  color: #000000;
+  background-color: #e5e5e5;
+}
+
+.dish-index-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.dish-show-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.dish-show-ingredients-h3 {
+  font-size: 0.9rem;
+  background-color: #ffd007;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.dish-show-ingredients-h3 svg {
+  margin: 0.65rem;
+  font-size: 1.5rem;
+}
+
+.dish-show-ingredients-ul {
+  padding-inline-start: 0;
+  margin-block-start: 0;
+  list-style: none;
+}
+
+.dish-show-ingredients-li {
+  padding: 0.75rem;
+  background-color: #e5e5e5;
+}
+
+.dish-show-page h3 {
+  margin: 0.65rem;
+  font-family: Oswald, sans-serif;
+  letter-spacing: 0.03rem;
+}
+
+.dish-show-recipe {
+  font-size: 1.1rem;
+}
+
+.dish-show-recipe p {
+  color: #6e6e6e;
+  padding: 0 0.6rem;
+}
+
+.delete-dish-link {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: #cc2e2e;
+  font-family: Oswald, sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.03rem;
+}
+
+.fixed-action-button {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fixed-action-button button {
+  height: 2.75rem;
+  border: none;
+  font-family: Oswald, sans-serif;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+}
+
+.fixed-action-button button.edit {
+  color: white;
+}
+
+.fixed-action-button button.add-btn {
+  color: #e4e4e4;
+  background-color: #000000;
+}
+
+.space-behind-fixed-button {
+  height: 8rem;
+}
+
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -189,6 +288,7 @@ a .auth-redirect-button {
   background: #fed;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
+
 .lds-ellipsis div:nth-child(1) {
   left: 8px;
   animation: lds-ellipsis1 0.6s infinite;
