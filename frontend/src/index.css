@@ -90,7 +90,7 @@ header.on-profile a.header-link-profile .header-icons.primary {
   margin: 1rem auto auto auto;
 }
 
-input {
+.auth-form input {
   font-family: 'Tiro Devanagari Sanskrit', serif;
   width: 92%;
   padding: 1em;
@@ -109,7 +109,7 @@ input {
   margin-bottom: 0.5rem;
 }
 
-input:focus {
+.auth-form input:focus {
   outline: 0;
   border-bottom: solid #ffd007;
 }
@@ -129,6 +129,91 @@ form button {
   padding: 0.75rem;
   color: #686868;
   background-color: #ffd007;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin: 0.75rem 0;
+}
+
+.form-control.ingredient {
+  padding-left: 1rem;
+  width: 91%;
+}
+
+.form-control label {
+  font-family: Oswald, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
+}
+
+.form-control input {
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  padding: 1em;
+  background-color: #e5e5e5;
+  border: none;
+}
+
+.form-control input::placeholder {
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+}
+
+.form-control input:focus {
+  border: 1px #ffd007;
+}
+
+.form-control textarea {
+  padding: 1em;
+  background-color: #e5e5e5;
+  border: none;
+  height: 6rem;
+}
+
+.form-control select {
+  display: flex;
+  flex-direction: column;
+  height: 2.5rem;
+  border: 1px solid #e5e5e5;
+  padding: 0.65rem;
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  color: #6e6e6e;
+  background-color: #e5e5e5;
+}
+
+.form-control select option {
+  padding-left: 0.75rem;
+  height: 1.5rem;
+  color: #686868;
+}
+
+.form-control select option:checked {
+  height: 2.5rem;
+  background-color: #e5e5e5;
+}
+
+.add-ingredients-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #94c53b;
+  color: #ffffff;
+  margin: 0.5rem 1rem;
+  height: 6rem;
+}
+
+.add-ingredients-button p {
+  font-family: Oswald, sans-serif;
+  letter-spacing: 0.075rem;
+  margin: 0.5rem;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.add-ingredients-button em {
+  font-size: 1.1rem;
 }
 
 a .auth-redirect-button {
@@ -252,25 +337,35 @@ a .auth-redirect-button {
   flex-direction: column;
 }
 
-.fixed-action-button button {
+.fixed-action-button a button {
   height: 2.75rem;
+  width: 100%;
   border: none;
   font-family: Oswald, sans-serif;
   letter-spacing: 0.05rem;
   font-weight: 700;
 }
 
-.fixed-action-button button.edit {
-  color: white;
+.fixed-action-button a.add-btn button {
+  color: #e4e4e4;
+  background-color: #2aad68;
 }
 
-.fixed-action-button button.add-btn {
-  color: #e4e4e4;
-  background-color: #000000;
+.dish-new-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .space-behind-fixed-button {
   height: 8rem;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .lds-ellipsis {
@@ -285,7 +380,7 @@ a .auth-redirect-button {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: #fed;
+  background: #ffd007;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 

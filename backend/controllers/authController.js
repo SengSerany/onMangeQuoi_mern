@@ -61,8 +61,8 @@ const newAuthSession = asyncHandler(async (req, res) => {
 const createAuthSession = asyncHandler(async (req, res) => {
   res
     .status(200)
-    .cookie('userid', req.user.id, { maxAge: 2592000000 })
-    .cookie('username', req.user.username, { maxAge: 2592000000 })
+    .cookie('userid', req.user.id, { maxAge: 60 * 60 * 1000 })
+    .cookie('username', req.user.username, { maxAge: 60 * 60 * 1000 })
     .json({ endpoint: 'Login user', user: req.user });
 });
 

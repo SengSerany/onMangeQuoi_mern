@@ -1,8 +1,29 @@
-function FixedActionButton() {
+import { Link } from 'react-router-dom';
+
+function FixedActionButton({
+  actions = [{ role: '', roleDescription: '', css: '' }],
+}) {
+  const destRoute = (role) => {
+    if (role === 'createDish') {
+      return '/dishes/new';
+    } else {
+      return '/dishes';
+    }
+  };
+
   return (
     <div className="fixed-action-button">
-      <button className="edit-btn">Modifier le plat</button>
-      <button className="add-btn">Ajouter le plat dans un menu</button>
+      {actions.map((action) => {
+        return (
+          <Link
+            key={`action-${action.role}`}
+            to={destRoute(action.role)}
+            className={`${action.css}-btn`}
+          >
+            <button>{action.roleDescription}</button>
+          </Link>
+        );
+      })}
     </div>
   );
 }

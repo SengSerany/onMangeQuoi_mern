@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { retrieveUser } from '../features/auth/authSlice';
 import AuthRedirectButton from '../components/AuthRedirectButton';
+import Spinner from '../components/Spinner';
 
 function Profile() {
   const dispatch = useDispatch();
@@ -18,12 +19,7 @@ function Profile() {
   }, []);
 
   if (isLoading) {
-    <div className="lds-ellipsis">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>;
+    return <Spinner />;
   }
 
   return (

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { indexDishes } from '../../features/dish/dishSlice';
 import DishCardIndex from '../../components/DishCardIndex';
 import DishToasts from '../../components/DishToasts';
+import FixedActionButton from '../../components/FixedActionButton';
+import Spinner from '../../components/Spinner';
 
 function DishIndex() {
   const dispatch = useDispatch();
@@ -19,27 +21,31 @@ function DishIndex() {
   }, []);
 
   if (dishLoading) {
-    return (
-      <div className="lds-ellipsis">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (
-    <div className="page-container">
-      <DishToasts />
-      <div className="dish-index-page">
-        <h1>Mes plats</h1>
-        <br />
-        {dishes !== null &&
-          dishes.map((dishInfos) => (
-            <DishCardIndex key={dishInfos._id} dish={dishInfos} />
-          ))}
+    <div>
+      <div className="page-container">
+        <DishToasts />
+        <div className="dish-index-page">
+          <h1>Mes plats</h1>
+          <br />
+          {dishes !== null &&
+            dishes.map((dishInfos) => (
+              <DishCardIndex key={dishInfos._id} dish={dishInfos} />
+            ))}
+        </div>
       </div>
+      <FixedActionButton
+        actions={[
+          {
+            role: 'createDish',
+            roleDescription: 'Ajouter un nouveau plat',
+            css: 'add',
+          },
+        ]}
+      />
     </div>
   );
 }
