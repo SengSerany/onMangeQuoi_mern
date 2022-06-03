@@ -2,66 +2,67 @@ import { useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 
 function DishForm({ formLabel }) {
-  const [ingredientsNb, setIngredientsNb] = useState(0);
-  const [ingredientsList, setIngredientsList] = useState([]);
+  const ingredientInitialState = {
+    ingredientName: '',
+    quantity: '',
+    unit: '',
+  };
+  const [ingredientsElements, setIngredientsElements] = useState([
+    ingredientInitialState,
+  ]);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    forPeopleNumber: '',
+    recipe: '',
+  });
+  const { name, forPeopleNumber, recipe } = formData;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleChangeIngredients = (indexArg, event) => {
+    const { name, value } = event.target;
+    const newIngrData = ingredientsElements.map((ingredient, indexElement) => {
+      if (indexElement === indexArg) {
+        return { ...ingredient, [name]: value };
+      } else {
+        return ingredient;
+      }
+    });
+    setIngredientsElements(newIngrData);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const reqData = {
+      ...formData,
+      ingredients: ingredientsElements,
+    };
+    console.log(reqData);
   };
 
-  const ingredientsAddForm = (nb) => {
-    return (
-      <div className="form-control ingredient" key={`ingredient-nb-${nb}`}>
-        <label>{`Ingredient ${nb}`}</label>
-        <input
-          type="text"
-          className=""
-          id={`ingredient-${nb}-name`}
-          name={`ingredient-${nb}-name`}
-          // value={`ingredient-${ingredientsNb}-name`}
-          placeholder="Nom de l'ingredient"
-          // onChange={handleChange}
-        />
-        <input
-          type="number"
-          className=""
-          id={`ingredient-${nb}-quantity`}
-          name={`ingredient-${nb}-quantity`}
-          // value={`ingredient-${ingredientsNb}-quantity`}
-          placeholder="Quantité"
-          // onChange={handleChange}
-        />
-        <select
-          type="text"
-          className=""
-          id={`ingredient-${nb}-unit`}
-          name={`ingredient-${nb}-unit`}
-          placeholder="Unité"
-          // onChange={handleChange}
-        >
-          <option className="text-grey">Choisissez une unité de mesure</option>
-          <option value="unity">Unité</option>
-          <option value="soupeSpoon">Cuillère à soupe</option>
-          <option value="coffeeSpoon">Cuillère à café</option>
-          <option value="gram">Gramme</option>
-          <option value="centigram">Centigramme</option>
-          <option value="liter">Litre</option>
-          <option value="centiliter">Centilitre</option>
-        </select>
-      </div>
-    );
+  const handleAddIngredients = async () => {
+    setIngredientsElements((prevIngredients) => {
+      return [...prevIngredients, ingredientInitialState];
+    });
   };
 
-  const handleAddIngredients = () => {
-    setIngredientsNb((prevNb) => {
-      const newNb = prevNb + 1;
-      return newNb;
-    });
-    setIngredientsList((prevList) => {
-      return [...prevList, ingredientsAddForm(ingredientsNb)];
-    });
+  const log = () => {
+    console.log(formData);
+    console.log(ingredientsElements);
   };
+
   return (
     <>
+      <button onClick={log}>LOG</button>
       <form className="dish-form" onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Nom du plat</label>
@@ -70,29 +71,71 @@ function DishForm({ formLabel }) {
             className=""
             id="name"
             name="name"
-            //   value={name}
+            value={name}
             placeholder="Ex: Pâte carbonnara"
-            //   onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="form-control">
           <label>Ingredient pour combien de personne ?</label>
           <input
             type="number"
+            min="1"
             className=""
             id="forPeopleNumber"
             name="forPeopleNumber"
-            // value={forPeopleNumber}
+            value={forPeopleNumber}
             placeholder="Ajouter un chiffre"
-            // onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="form-control">
           <label>Ingredients</label>
-          {ingredientsList.length > 0 &&
-            ingredientsList.map((ingredient) => {
-              return ingredient;
-            })}
+          {ingredientsElements.map((ingredientInput, index) => {
+            return (
+              <div
+                className="form-control ingredient"
+                key={`name${index}ingredient`}
+              >
+                <label>{`Ingredient ${index + 1}`}</label>
+                <input
+                  type="text"
+                  className=""
+                  name="ingredientName"
+                  value={ingredientInput.name}
+                  placeholder="Nom de l'ingredient"
+                  onChange={(event) => handleChangeIngredients(index, event)}
+                />
+                <input
+                  type="number"
+                  className=""
+                  name="quantity"
+                  value={ingredientInput.quantity}
+                  placeholder="Quantité"
+                  onChange={(event) => handleChangeIngredients(index, event)}
+                />
+                <select
+                  type="text"
+                  className=""
+                  name="unit"
+                  placeholder="Unité"
+                  value={ingredientInput.unit}
+                  onChange={(event) => handleChangeIngredients(index, event)}
+                >
+                  <option className="text-grey">
+                    Choisissez une unité de mesure
+                  </option>
+                  <option value="unity">Unité</option>
+                  <option value="soupeSpoon">Cuillère à soupe</option>
+                  <option value="coffeeSpoon">Cuillère à café</option>
+                  <option value="gram">Gramme</option>
+                  <option value="centigram">Centigramme</option>
+                  <option value="liter">Litre</option>
+                  <option value="centiliter">Centilitre</option>
+                </select>
+              </div>
+            );
+          })}
           <div
             className="add-ingredients-button"
             onClick={handleAddIngredients}
@@ -110,9 +153,9 @@ function DishForm({ formLabel }) {
             className=""
             id="recipe"
             name="recipe"
-            // value={recipe}
+            value={recipe}
             placeholder="Entrer la recette ici"
-            // onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         <br />

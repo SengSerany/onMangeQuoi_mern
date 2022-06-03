@@ -11,12 +11,15 @@ function FixedActionButton({
     }
   };
 
+  let key = 0;
+
   return (
     <div className="fixed-action-button">
       {actions.map((action) => {
+        key += 1;
         return (
           <Link
-            key={`action-${action.role}`}
+            key={`action-${key}`}
             to={destRoute(action.role)}
             className={`${action.css}-btn`}
           >
