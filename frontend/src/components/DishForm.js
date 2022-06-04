@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createDish } from '../features/dish/dishSlice';
 import { FaPlusCircle } from 'react-icons/fa';
 
 function DishForm({ formLabel }) {
+  const dispatch = useDispatch();
   const ingredientInitialState = {
     ingredientName: '',
     quantity: '',
@@ -46,7 +49,7 @@ function DishForm({ formLabel }) {
       ...formData,
       ingredients: ingredientsElements,
     };
-    console.log(reqData);
+    dispatch(createDish(reqData));
   };
 
   const handleAddIngredients = async () => {
@@ -55,14 +58,8 @@ function DishForm({ formLabel }) {
     });
   };
 
-  const log = () => {
-    console.log(formData);
-    console.log(ingredientsElements);
-  };
-
   return (
     <>
-      <button onClick={log}>LOG</button>
       <form className="dish-form" onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Nom du plat</label>

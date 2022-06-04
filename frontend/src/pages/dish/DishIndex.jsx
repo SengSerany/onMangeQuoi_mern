@@ -14,7 +14,7 @@ function DishIndex() {
   useEffect(() => {
     if (isRead) return;
     setIsRead(true);
-    if (dishes === null) {
+    if (dishes.length === 0) {
       dispatch(indexDishes());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
