@@ -34,7 +34,7 @@ const createDish = asyncHandler(async (req, res) => {
     authID: currentUser._id,
     ...req.body,
   });
-  res.status(200).json({ entryPoint: 'create dish', ...newDish._doc });
+  res.status(200).json({ entryPoint: 'create dish', dish: newDish });
 });
 
 // Edit

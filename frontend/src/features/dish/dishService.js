@@ -8,8 +8,15 @@ const getAllDishes = async () => {
   return response.data;
 };
 
+// Create dish
+const createNewDishes = async (dishData) => {
+  const response = await axios.post(`${API_URL}/new`, dishData);
+  return response.data;
+};
+
 const dishService = {
   getAllDishes,
+  createNewDishes,
 };
 
 export default dishService;

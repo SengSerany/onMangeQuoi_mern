@@ -42,7 +42,7 @@ function DishShow() {
                     <li
                       key={ingredientsInfos._id}
                       className="dish-show-ingredients-li"
-                    >{`${ingredientsInfos.name} (${
+                    >{`${ingredientsInfos.ingredientName} (${
                       ingredientsInfos.quantity + ' ' + ingredientsInfos.unit
                     })`}</li>
                   );
@@ -51,7 +51,7 @@ function DishShow() {
                     <li
                       key={ingredientsInfos._id}
                       className="dish-show-ingredients-li"
-                    >{`${ingredientsInfos.name}`}</li>
+                    >{`${ingredientsInfos.ingredientName}`}</li>
                   );
                 }
               })}

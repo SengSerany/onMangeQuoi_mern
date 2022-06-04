@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import dishService from './dishService';
 
 const initialState = {
-  dishes: null,
+  dishes: [],
   dishError: false,
   dishSuccess: false,
   dishLoading: false,
@@ -14,6 +14,23 @@ export const indexDishes = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       return await dishService.getAllDishes();
+    } catch (error) {
+      const dishMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.dishMessage) ||
+        error.dishMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(dishMessage);
+    }
+  }
+);
+
+export const createDish = createAsyncThunk(
+  'dish/create',
+  async (dishData, thunkAPI) => {
+    try {
+      return await dishService.createNewDishes(dishData);
     } catch (error) {
       const dishMessage =
         (error.response &&
@@ -47,6 +64,21 @@ export const dishSlice = createSlice({
         state.dishLoading = false;
       })
       .addCase(indexDishes.rejected, (state, action) => {
+        state.dishLoading = false;
+        state.dishError = true;
+        state.dishMessage = action.payload;
+      })
+      .addCase(createDish.pending, (state) => {
+        state.dishLoading = true;
+      })
+      .addCase(createDish.fulfilled, (state, action) => {
+        state.dishLoading = false;
+        state.dishSuccess = true;
+        console.log(action.payload);
+        state.dishes.push(action.payload.dish);
+        state.dishMessage = `Tu as crée le plat "${action.payload.dish.name}"`;
+      })
+      .addCase(createDish.rejected, (state, action) => {
         state.dishLoading = false;
         state.dishError = true;
         state.dishMessage = action.payload;
