@@ -351,13 +351,13 @@ a .auth-redirect-button {
   background-color: #2aad68;
 }
 
-.dish-new-page {
+.new-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.dish-new-page h1 {
+.new-page h1 {
   text-align: center;
 }
 

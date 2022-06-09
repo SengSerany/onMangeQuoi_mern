@@ -9,6 +9,7 @@ import DishShow from './pages/dish/DishShow';
 import DishNew from './pages/dish/DishNew';
 import DishEdit from './pages/dish/DishEdit';
 import MenuIndex from './pages/menu/MenuIndex';
+import MenuNew from './pages/menu/MenuNew';
 import AuthToasts from './components/AuthToasts';
 import DishToasts from './components/DishToasts';
 import { ToastContainer } from 'react-toastify';
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/dishes/:id" element={<DishShow />} />
             <Route exact path="/dishes/new" element={<DishNew />} />
             <Route exact path="/dishes" element={<DishIndex />} />
+            <Route exact path="/menus/new" element={<MenuNew />} />
             <Route exact path="/menus" element={<MenuIndex />} />
           </Routes>
         </div>
