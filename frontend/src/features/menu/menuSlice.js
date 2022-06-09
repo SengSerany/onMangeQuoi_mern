@@ -60,22 +60,22 @@ export const updateMenu = createAsyncThunk(
   }
 );
 
-// export const deleteMenu = createAsyncThunk(
-//   'menu/delete',
-//   async (menuID, thunkAPI) => {
-//     try {
-//       return await menuService.deleteMenus(menuID);
-//     } catch (error) {
-//       const menuMessage =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.menuMessage) ||
-//         error.menuMessage ||
-//         error.toString();
-//       return thunkAPI.rejectWithValue(menuMessage);
-//     }
-//   }
-// );
+export const deleteMenu = createAsyncThunk(
+  'menu/delete',
+  async (menuID, thunkAPI) => {
+    try {
+      return await menuService.deleteMenus(menuID);
+    } catch (error) {
+      const menuMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.menuMessage) ||
+        error.menuMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(menuMessage);
+    }
+  }
+);
 
 export const menuSlice = createSlice({
   name: 'menu',
@@ -135,23 +135,23 @@ export const menuSlice = createSlice({
         state.menuLoading = false;
         state.menuError = true;
         state.menuMessage = action.payload;
+      })
+      .addCase(deleteMenu.pending, (state) => {
+        state.menuLoading = true;
+      })
+      .addCase(deleteMenu.fulfilled, (state, action) => {
+        state.menuLoading = false;
+        state.menuSuccess = true;
+        state.menus = state.menus.filter(
+          (menus) => menus._id !== action.payload.id
+        );
+        state.menuMessage = `Tu as supprimer le menu "${action.payload.name}"`;
+      })
+      .addCase(deleteMenu.rejected, (state, action) => {
+        state.menuLoading = false;
+        state.menuError = true;
+        state.menuMessage = action.payload;
       }),
-  // .addCase(deleteMenu.pending, (state) => {
-  //   state.menuLoading = true;
-  // })
-  // .addCase(deleteMenu.fulfilled, (state, action) => {
-  //   state.menuLoading = false;
-  //   state.menuSuccess = true;
-  //   state.menus = state.menus.filter(
-  //     (menus) => menus._id !== action.payload.id
-  //   );
-  //   state.menuMessage = `Tu as supprimer le plat "${action.payload.name}"`;
-  // })
-  // .addCase(deleteMenu.rejected, (state, action) => {
-  //   state.menuLoading = false;
-  //   state.menuError = true;
-  //   state.menuMessage = action.payload;
-  // }),
 });
 
 export const { resetMenuState } = menuSlice.actions;
