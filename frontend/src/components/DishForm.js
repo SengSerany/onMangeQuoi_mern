@@ -86,7 +86,7 @@ function DishForm({
 
   return (
     <>
-      <form className="dish-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Nom du plat</label>
           <input

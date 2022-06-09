@@ -12,6 +12,7 @@ import MenuIndex from './pages/menu/MenuIndex';
 import MenuNew from './pages/menu/MenuNew';
 import AuthToasts from './components/AuthToasts';
 import DishToasts from './components/DishToasts';
+import MenuToasts from './components/MenuToasts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,6 +24,7 @@ function App() {
           <Header />
           <AuthToasts />
           <DishToasts />
+          <MenuToasts />
           <Routes>
             <Route exact path="/" element={<Dashboard />} />
             <Route exact path="/register" element={<Register />} />

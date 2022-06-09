@@ -26,22 +26,22 @@ export const indexMenus = createAsyncThunk(
   }
 );
 
-// export const createMenu = createAsyncThunk(
-//   'menu/create',
-//   async (menuData, thunkAPI) => {
-//     try {
-//       return await menuService.createNewMenus(menuData);
-//     } catch (error) {
-//       const menuMessage =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.menuMessage) ||
-//         error.menuMessage ||
-//         error.toString();
-//       return thunkAPI.rejectWithValue(menuMessage);
-//     }
-//   }
-// );
+export const createMenu = createAsyncThunk(
+  'menu/create',
+  async (menuData, thunkAPI) => {
+    try {
+      return await menuService.createNewMenus(menuData);
+    } catch (error) {
+      const menuMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.menuMessage) ||
+        error.menuMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(menuMessage);
+    }
+  }
+);
 
 // export const updateMenu = createAsyncThunk(
 //   'menu/update',
@@ -101,21 +101,21 @@ export const menuSlice = createSlice({
         state.menuLoading = false;
         state.menuError = true;
         state.menuMessage = action.payload;
+      })
+      .addCase(createMenu.pending, (state) => {
+        state.menuLoading = true;
+      })
+      .addCase(createMenu.fulfilled, (state, action) => {
+        state.menuLoading = false;
+        state.menuSuccess = true;
+        state.menus.push(action.payload.menu);
+        state.menuMessage = `Tu as crée le nouveau menu: "${action.payload.menu.menuName}"`;
+      })
+      .addCase(createMenu.rejected, (state, action) => {
+        state.menuLoading = false;
+        state.menuError = true;
+        state.menuMessage = action.payload;
       }),
-  // .addCase(createMenu.pending, (state) => {
-  //   state.menuLoading = true;
-  // })
-  // .addCase(createMenu.fulfilled, (state, action) => {
-  //   state.menuLoading = false;
-  //   state.menuSuccess = true;
-  //   state.menus.push(action.payload.menu);
-  //   state.menuMessage = `Tu as crée le plat "${action.payload.menu.name}"`;
-  // })
-  // .addCase(createMenu.rejected, (state, action) => {
-  //   state.menuLoading = false;
-  //   state.menuError = true;
-  //   state.menuMessage = action.payload;
-  // })
   // .addCase(updateMenu.pending, (state) => {
   //   state.menuLoading = true;
   // })
