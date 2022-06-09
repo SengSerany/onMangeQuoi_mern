@@ -11,6 +11,18 @@ a {
   text-decoration: none;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.color-grey1 {
+  color: #b4b4b4;
+}
+
 .page-container {
   padding: 0.5rem 1rem 1rem 1rem;
   height: 85vh;
@@ -34,6 +46,7 @@ h1 {
   font-size: 2rem;
   font-family: 'Oswald', sans-serif;
   margin: auto;
+  margin-top: -0.25rem;
   margin-bottom: 1rem;
 }
 
@@ -269,14 +282,17 @@ a .auth-redirect-button {
   background-color: #e5e5e5;
 }
 
-.index-page {
+.flex-column {
   display: flex;
   flex-direction: column;
 }
 
-.dish-show-page {
-  display: flex;
-  flex-direction: column;
+.justify-center {
+  justify-content: center;
+}
+
+.ingredients-label {
+  margin-top: 0.5rem;
 }
 
 .dish-show-ingredients-h3 {
@@ -285,6 +301,7 @@ a .auth-redirect-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 1rem;
   margin-top: 1rem;
 }
 
@@ -301,6 +318,7 @@ a .auth-redirect-button {
 
 .dish-show-ingredients-li {
   padding: 0.75rem;
+  padding-left: 1.75rem;
   background-color: #e5e5e5;
 }
 
@@ -319,7 +337,7 @@ a .auth-redirect-button {
   padding: 0 0.6rem;
 }
 
-.delete-dish-link {
+.delete-link {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -351,13 +369,7 @@ a .auth-redirect-button {
   background-color: #2aad68;
 }
 
-.new-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.new-page h1 {
+.flex-column h1 {
   text-align: center;
 }
 

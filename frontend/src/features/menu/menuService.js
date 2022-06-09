@@ -15,13 +15,13 @@ const createNewMenus = async (menuData) => {
 };
 
 // Update menu
-// const updateMenus = async (menuData) => {
-//   const response = await axios.patch(
-//     `${API_URL}/${menuData.menuId}/edit`,
-//     menuData
-//   );
-//   return response.data;
-// };
+const updateMenus = async (menuData) => {
+  const response = await axios.patch(
+    `${API_URL}/${menuData.menuId}/edit`,
+    menuData
+  );
+  return response.data;
+};
 
 // Delete menu
 // const deleteMenus = async (menuID) => {
@@ -32,7 +32,7 @@ const createNewMenus = async (menuData) => {
 const menuService = {
   getAllMenus,
   createNewMenus,
-  //   updateMenus,
+  updateMenus,
   //   deleteMenus,
 };
 

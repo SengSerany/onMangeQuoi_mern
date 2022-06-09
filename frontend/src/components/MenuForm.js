@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { createMenu } from '../features/menu/menuSlice';
+import { useLocation, useParams } from 'react-router-dom';
+import { createMenu, updateMenu } from '../features/menu/menuSlice';
 
-function MenuForm() {
+function MenuForm({ currentMenu = { menuName: '' } }) {
+  const { id } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
-  const initialFormData = { menuName: '' };
+  //   const initialFormData = { menuName: '' };
   const actionBtnLabel = () => {
     if (location.pathname.endsWith('new')) {
       return 'Créer';
@@ -16,7 +17,7 @@ function MenuForm() {
   };
 
   const [buttonLabel] = useState(actionBtnLabel());
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(currentMenu);
   const { menuName } = formData;
 
   const handleChange = (e) => {
@@ -31,7 +32,15 @@ function MenuForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createMenu(formData));
+    if (location.pathname.endsWith('new')) {
+      dispatch(createMenu(formData));
+    } else if (location.pathname.endsWith('edit')) {
+      const reqFormData = {
+        ...formData,
+        menuId: id,
+      };
+      dispatch(updateMenu(reqFormData));
+    }
   };
 
   const log = () => {

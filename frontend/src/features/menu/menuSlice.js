@@ -43,22 +43,22 @@ export const createMenu = createAsyncThunk(
   }
 );
 
-// export const updateMenu = createAsyncThunk(
-//   'menu/update',
-//   async (menuData, thunkAPI) => {
-//     try {
-//       return await menuService.updateMenus(menuData);
-//     } catch (error) {
-//       const menuMessage =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.menuMessage) ||
-//         error.menuMessage ||
-//         error.toString();
-//       return thunkAPI.rejectWithValue(menuMessage);
-//     }
-//   }
-// );
+export const updateMenu = createAsyncThunk(
+  'menu/update',
+  async (menuData, thunkAPI) => {
+    try {
+      return await menuService.updateMenus(menuData);
+    } catch (error) {
+      const menuMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.menuMessage) ||
+        error.menuMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(menuMessage);
+    }
+  }
+);
 
 // export const deleteMenu = createAsyncThunk(
 //   'menu/delete',
@@ -115,27 +115,27 @@ export const menuSlice = createSlice({
         state.menuLoading = false;
         state.menuError = true;
         state.menuMessage = action.payload;
+      })
+      .addCase(updateMenu.pending, (state) => {
+        state.menuLoading = true;
+      })
+      .addCase(updateMenu.fulfilled, (state, action) => {
+        state.menuLoading = false;
+        state.menuSuccess = true;
+        state.menus = state.menus.map((menu) => {
+          if (menu._id === action.payload.updatedMenu._id) {
+            return action.payload.updatedMenu;
+          } else {
+            return menu;
+          }
+        });
+        state.menuMessage = `Tu as modifié le menu "${action.payload.updatedMenu.menuName}"`;
+      })
+      .addCase(updateMenu.rejected, (state, action) => {
+        state.menuLoading = false;
+        state.menuError = true;
+        state.menuMessage = action.payload;
       }),
-  // .addCase(updateMenu.pending, (state) => {
-  //   state.menuLoading = true;
-  // })
-  // .addCase(updateMenu.fulfilled, (state, action) => {
-  //   state.menuLoading = false;
-  //   state.menuSuccess = true;
-  //   state.menus = state.menus.map((menu) => {
-  //     if (menu._id === action.payload.updatedMenu._id) {
-  //       return action.payload.updatedMenu;
-  //     } else {
-  //       return menu;
-  //     }
-  //   });
-  //   state.menuMessage = `Tu as modifié le plat "${action.payload.updatedMenu.name}"`;
-  // })
-  // .addCase(updateMenu.rejected, (state, action) => {
-  //   state.menuLoading = false;
-  //   state.menuError = true;
-  //   state.menuMessage = action.payload;
-  // })
   // .addCase(deleteMenu.pending, (state) => {
   //   state.menuLoading = true;
   // })

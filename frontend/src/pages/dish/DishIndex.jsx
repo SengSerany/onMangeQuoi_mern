@@ -26,7 +26,7 @@ function DishIndex() {
   return (
     <div>
       <div className="page-container">
-        <div className="index-page">
+        <div className="flex-column">
           <h1>Mes plats</h1>
           <br />
           {dishes !== null &&

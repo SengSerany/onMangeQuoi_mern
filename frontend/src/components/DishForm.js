@@ -113,7 +113,7 @@ function DishForm({
           />
         </div>
         <div className="form-control">
-          <label>Ingredients</label>
+          <label className="ingredients-label">Ingredients</label>
           {ingredientsElements.map((ingredientInput, index) => {
             return (
               <div
