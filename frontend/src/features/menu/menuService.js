@@ -24,16 +24,16 @@ const updateMenus = async (menuData) => {
 };
 
 // Delete menu
-// const deleteMenus = async (menuID) => {
-//   const response = await axios.delete(`${API_URL}/${menuID}`);
-//   return response.data;
-// };
+const deleteMenus = async (menuID) => {
+  const response = await axios.delete(`${API_URL}/${menuID}`);
+  return response.data;
+};
 
 const menuService = {
   getAllMenus,
   createNewMenus,
   updateMenus,
-  //   deleteMenus,
+  deleteMenus,
 };
 
 export default menuService;

@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
-// import { deleteMenu } from '../../features/menu/menuSlice';
+import { deleteMenu } from '../../features/menu/menuSlice';
 import FixedActionButton from '../../components/FixedActionButton';
 
 function MenuShow() {
@@ -23,10 +23,7 @@ function MenuShow() {
           <p className="color-grey1 no-margin text-center">menu :</p>
           <h1>{currentMenu.menuName}</h1>
           <br />
-          <div
-            className="delete-link"
-            // onClick={() => dispatch(deleteMenu(id))}
-          >
+          <div className="delete-link" onClick={() => dispatch(deleteMenu(id))}>
             <p>Supprimer le plat</p>
           </div>
           <div className="space-behind-fixed-button"></div>
