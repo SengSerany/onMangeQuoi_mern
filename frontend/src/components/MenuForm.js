@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { createMenu } from '../features/menu/menuSlice';
 
 function MenuForm() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const initialFormData = { menuName: '' };
   const actionBtnLabel = () => {
     if (location.pathname.endsWith('new')) {
@@ -17,14 +20,26 @@ function MenuForm() {
   const { menuName } = formData;
 
   const handleChange = (e) => {
-    // const { name, value } = e.target;
+    const { name, value } = e.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(createMenu(formData));
+  };
+
+  const log = () => {
+    console.log(formData);
   };
   return (
-    <form className="dish-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <button onClick={log}>LOG</button>
       <div className="form-control">
         <label>Nom du menu</label>
         <input

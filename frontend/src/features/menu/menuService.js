@@ -9,10 +9,10 @@ const getAllMenus = async () => {
 };
 
 // Create menu
-// const createNewMenus = async (menuData) => {
-//   const response = await axios.post(`${API_URL}/new`, menuData);
-//   return response.data;
-// };
+const createNewMenus = async (menuData) => {
+  const response = await axios.post(`${API_URL}/new`, menuData);
+  return response.data;
+};
 
 // Update menu
 // const updateMenus = async (menuData) => {
@@ -31,7 +31,7 @@ const getAllMenus = async () => {
 
 const menuService = {
   getAllMenus,
-  //   createNewMenus,
+  createNewMenus,
   //   updateMenus,
   //   deleteMenus,
 };
