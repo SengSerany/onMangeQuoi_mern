@@ -15,7 +15,7 @@ function DishEdit() {
 
   return (
     <div className="page-container">
-      <div className="dish-new-page">
+      <div className="new-page">
         <h1>
           Modifier
           <em>
