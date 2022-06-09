@@ -357,8 +357,23 @@ a .auth-redirect-button {
   justify-content: center;
 }
 
+.dish-new-page h1 {
+  text-align: center;
+}
+
+.dish-edit-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .space-behind-fixed-button {
   height: 8rem;
+}
+
+.action-role-description {
+  font-weight: 400;
+  font-size: 0.9rem;
 }
 
 .spinner {

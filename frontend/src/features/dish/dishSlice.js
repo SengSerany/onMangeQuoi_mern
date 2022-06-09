@@ -43,6 +43,40 @@ export const createDish = createAsyncThunk(
   }
 );
 
+export const updateDish = createAsyncThunk(
+  'dish/update',
+  async (dishData, thunkAPI) => {
+    try {
+      return await dishService.updateDishes(dishData);
+    } catch (error) {
+      const dishMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.dishMessage) ||
+        error.dishMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(dishMessage);
+    }
+  }
+);
+
+export const deleteDish = createAsyncThunk(
+  'dish/delete',
+  async (dishID, thunkAPI) => {
+    try {
+      return await dishService.deleteDishes(dishID);
+    } catch (error) {
+      const dishMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.dishMessage) ||
+        error.dishMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(dishMessage);
+    }
+  }
+);
+
 export const dishSlice = createSlice({
   name: 'dish',
   initialState,
@@ -74,11 +108,46 @@ export const dishSlice = createSlice({
       .addCase(createDish.fulfilled, (state, action) => {
         state.dishLoading = false;
         state.dishSuccess = true;
-        console.log(action.payload);
         state.dishes.push(action.payload.dish);
         state.dishMessage = `Tu as crée le plat "${action.payload.dish.name}"`;
       })
       .addCase(createDish.rejected, (state, action) => {
+        state.dishLoading = false;
+        state.dishError = true;
+        state.dishMessage = action.payload;
+      })
+      .addCase(updateDish.pending, (state) => {
+        state.dishLoading = true;
+      })
+      .addCase(updateDish.fulfilled, (state, action) => {
+        state.dishLoading = false;
+        state.dishSuccess = true;
+        state.dishes = state.dishes.map((dish) => {
+          if (dish._id === action.payload.updatedDish._id) {
+            return action.payload.updatedDish;
+          } else {
+            return dish;
+          }
+        });
+        state.dishMessage = `Tu as modifié le plat "${action.payload.updatedDish.name}"`;
+      })
+      .addCase(updateDish.rejected, (state, action) => {
+        state.dishLoading = false;
+        state.dishError = true;
+        state.dishMessage = action.payload;
+      })
+      .addCase(deleteDish.pending, (state) => {
+        state.dishLoading = true;
+      })
+      .addCase(deleteDish.fulfilled, (state, action) => {
+        state.dishLoading = false;
+        state.dishSuccess = true;
+        state.dishes = state.dishes.filter(
+          (dishes) => dishes._id !== action.payload.id
+        );
+        state.dishMessage = `Tu as supprimer le plat "${action.payload.name}"`;
+      })
+      .addCase(deleteDish.rejected, (state, action) => {
         state.dishLoading = false;
         state.dishError = true;
         state.dishMessage = action.payload;

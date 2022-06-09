@@ -1,23 +1,44 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createDish } from '../features/dish/dishSlice';
+import { useLocation } from 'react-router-dom';
+import { createDish, updateDish } from '../features/dish/dishSlice';
 import { FaPlusCircle } from 'react-icons/fa';
 
-function DishForm({ formLabel }) {
+function DishForm({
+  currentDish = {
+    _id: '',
+    name: '',
+    ingredients: [],
+    forPeopleNumber: '',
+    recipe: '',
+  },
+}) {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const actionBtnLabel = () => {
+    if (location.pathname.endsWith('new')) {
+      return 'Ajouter';
+    } else if (location.pathname.endsWith('edit')) {
+      return 'Modifier';
+    }
+  };
+  const [buttonLabel] = useState(actionBtnLabel());
   const ingredientInitialState = {
     ingredientName: '',
     quantity: '',
     unit: '',
   };
-  const [ingredientsElements, setIngredientsElements] = useState([
-    ingredientInitialState,
-  ]);
+  const [ingredientsElements, setIngredientsElements] = useState(
+    currentDish.ingredients.length > 0
+      ? currentDish.ingredients
+      : [ingredientInitialState]
+  );
 
   const [formData, setFormData] = useState({
-    name: '',
-    forPeopleNumber: '',
-    recipe: '',
+    name: currentDish.name,
+    forPeopleNumber: currentDish.forPeopleNumber,
+    recipe: currentDish.recipe,
   });
   const { name, forPeopleNumber, recipe } = formData;
 
@@ -49,7 +70,12 @@ function DishForm({ formLabel }) {
       ...formData,
       ingredients: ingredientsElements,
     };
-    dispatch(createDish(reqData));
+    if (location.pathname.endsWith('new')) {
+      dispatch(createDish(reqData));
+    } else if (location.pathname.endsWith('edit')) {
+      reqData.dishId = currentDish._id;
+      dispatch(updateDish(reqData));
+    }
   };
 
   const handleAddIngredients = async () => {
@@ -99,7 +125,7 @@ function DishForm({ formLabel }) {
                   type="text"
                   className=""
                   name="ingredientName"
-                  value={ingredientInput.name}
+                  value={ingredientInput.ingredientName}
                   placeholder="Nom de l'ingredient"
                   onChange={(event) => handleChangeIngredients(index, event)}
                 />
@@ -125,6 +151,7 @@ function DishForm({ formLabel }) {
                   <option value="unity">Unité</option>
                   <option value="soupeSpoon">Cuillère à soupe</option>
                   <option value="coffeeSpoon">Cuillère à café</option>
+                  <option value="kilo">Kilogramme</option>
                   <option value="gram">Gramme</option>
                   <option value="centigram">Centigramme</option>
                   <option value="liter">Litre</option>
@@ -156,7 +183,7 @@ function DishForm({ formLabel }) {
           />
         </div>
         <br />
-        <button type="submit">{formLabel}</button>
+        <button type="submit">{buttonLabel}</button>
       </form>
       <br />
     </>

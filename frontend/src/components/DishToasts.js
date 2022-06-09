@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { resetDishState } from '../features/dish/dishSlice';
 import { toast } from 'react-toastify';
 
 function DishToasts() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
   const { dishSuccess, dishError, dishMessage } = useSelector(
     (state) => state.dish
@@ -18,9 +17,7 @@ function DishToasts() {
     }
 
     if (dishSuccess) {
-      if (location.pathname === '/dishes/new') {
-        navigate('/dishes');
-      }
+      navigate('/dishes');
       toast.success(dishMessage);
     }
 
