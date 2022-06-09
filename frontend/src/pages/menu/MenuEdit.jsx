@@ -1,29 +1,29 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import DishForm from '../../components/DishForm';
+import MenuForm from '../../components/MenuForm';
 import Spinner from '../../components/Spinner';
 
 function DishEdit() {
   const { id } = useParams();
-  const { dishes, dishLoading } = useSelector((state) => state.dish);
+  const { menus, menuLoading } = useSelector((state) => state.menu);
 
-  let currentDish = dishes.find((dish) => dish._id === id);
+  let currentMenu = menus.find((menu) => menu._id === id);
 
-  if (dishLoading) {
+  if (menuLoading) {
     return <Spinner />;
   }
 
   return (
     <div className="page-container">
-      <div className="flex-column">
+      <div className="flex-column justify-center">
         <h1>
           Modifier
           <em>
-            <br />"{currentDish.name}"
+            <br />"{currentMenu.menuName}"
           </em>
         </h1>
         <br />
-        <DishForm currentDish={currentDish} />
+        <MenuForm currentMenu={currentMenu} />
       </div>
     </div>
   );

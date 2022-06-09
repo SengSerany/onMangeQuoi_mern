@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function Dashboard() {
   return (
     <div className="page-container">
-      <div>
+      <div className="flex-column justify-center">
         <h1>Dashboard</h1>
         <br />
         <Link to="/dishes">

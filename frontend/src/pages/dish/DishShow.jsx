@@ -63,7 +63,8 @@ function DishShow() {
   return (
     <div>
       <div className="page-container">
-        <div className="dish-show-page">
+        <div className="flex-column">
+          <p className="color-grey1 no-margin text-center">plat :</p>
           <h1>{currentDish.name}</h1>
           <div
             className={`dish-show-ingredients-h3`}
@@ -111,7 +112,7 @@ function DishShow() {
             <p>Tu n'as pas renseigné de recette</p>
           )}
           <div
-            className="delete-dish-link"
+            className="delete-link"
             onClick={() => dispatch(deleteDish(params.id))}
           >
             <p>Supprimer le plat</p>

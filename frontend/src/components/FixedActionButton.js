@@ -10,6 +10,8 @@ function FixedActionButton({
       return `/dishes/${currentID}/edit`;
     } else if (role === 'createMenu') {
       return `/menus/new`;
+    } else if (role === 'editMenu') {
+      return `/menus/${currentID}/edit`;
     } else {
       return '/';
     }

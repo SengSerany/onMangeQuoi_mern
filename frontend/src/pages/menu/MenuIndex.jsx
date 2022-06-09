@@ -26,7 +26,7 @@ function MenuIndex() {
   return (
     <div>
       <div className="page-container">
-        <div className="index-page">
+        <div className="flex-column">
           <h1>Mes Menus</h1>
           <br />
           {menus.length !== 0 &&
