@@ -17,6 +17,7 @@ connectDB();
 // Call routers
 const authRouter = require('./routes/AuthRoutes');
 const dishRouter = require('./routes/dishRoutes');
+const menuRouter = require('./routes/menuRoutes');
 
 // Middleware
 app.use(express.json());
@@ -37,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Set routes
+app.use('/api/v1/menu', menuRouter);
 app.use('/api/v1/dish', dishRouter);
 app.use('/api/v1/auth', authRouter);
 
