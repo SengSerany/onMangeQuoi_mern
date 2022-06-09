@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { indexDishes } from '../../features/dish/dishSlice';
-import DishCardIndex from '../../components/DishCardIndex';
+import { useSelector, useDispatch } from 'react-redux';
+import { indexMenus } from '../../features/menu/menuSlice';
+import MenuCardIndex from '../../components/MenuCardIndex';
 import FixedActionButton from '../../components/FixedActionButton';
 import Spinner from '../../components/Spinner';
 
-function DishIndex() {
+function MenuIndex() {
   const dispatch = useDispatch();
-  const { dishes, dishLoading } = useSelector((state) => state.dish);
+  const { menus, menuLoading } = useSelector((state) => state.menu);
   const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
     if (isRead) return;
     setIsRead(true);
-    if (dishes.length === 0) {
-      dispatch(indexDishes());
+    if (menus.length === 0) {
+      dispatch(indexMenus());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (dishLoading) {
+  if (menuLoading) {
     return <Spinner />;
   }
 
@@ -27,19 +27,19 @@ function DishIndex() {
     <div>
       <div className="page-container">
         <div className="index-page">
-          <h1>Mes plats</h1>
+          <h1>Mes Menus</h1>
           <br />
-          {dishes !== null &&
-            dishes.map((dishInfos) => (
-              <DishCardIndex key={dishInfos._id} dish={dishInfos} />
+          {menus.length !== 0 &&
+            menus.map((menuInfos) => (
+              <MenuCardIndex key={menuInfos._id} menu={menuInfos} />
             ))}
         </div>
       </div>
       <FixedActionButton
         actions={[
           {
-            role: 'createDish',
-            roleDescription: 'Ajouter un nouveau plat',
+            role: 'createMenu',
+            roleDescription: 'Créer un nouveau menu',
             css: 'add',
           },
         ]}
@@ -48,4 +48,4 @@ function DishIndex() {
   );
 }
 
-export default DishIndex;
+export default MenuIndex;

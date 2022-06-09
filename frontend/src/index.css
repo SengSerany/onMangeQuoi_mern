@@ -262,14 +262,14 @@ a .auth-redirect-button {
   background-color: #000000d5;
 }
 
-.dish-card-index {
+.card-index {
   padding: 0.05rem 1rem;
   margin: 0.2rem 0;
   color: #000000;
   background-color: #e5e5e5;
 }
 
-.dish-index-page {
+.index-page {
   display: flex;
   flex-direction: column;
 }

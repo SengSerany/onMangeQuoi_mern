@@ -9,6 +9,9 @@ function Dashboard() {
         <Link to="/dishes">
           <button>Mes plats</button>
         </Link>
+        <Link to="/menus">
+          <button>Mes menus</button>
+        </Link>
       </div>
     </div>
   );
