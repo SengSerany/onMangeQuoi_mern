@@ -14,9 +14,26 @@ const createNewDishes = async (dishData) => {
   return response.data;
 };
 
+// Update dish
+const updateDishes = async (dishData) => {
+  const response = await axios.patch(
+    `${API_URL}/${dishData.dishId}/edit`,
+    dishData
+  );
+  return response.data;
+};
+
+// Delete dish
+const deleteDishes = async (dishID) => {
+  const response = await axios.delete(`${API_URL}/${dishID}`);
+  return response.data;
+};
+
 const dishService = {
   getAllDishes,
   createNewDishes,
+  updateDishes,
+  deleteDishes,
 };
 
 export default dishService;

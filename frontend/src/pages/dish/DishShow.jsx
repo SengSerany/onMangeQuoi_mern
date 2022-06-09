@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
+import { deleteDish } from '../../features/dish/dishSlice';
 import FixedActionButton from '../../components/FixedActionButton';
 import { BiRightArrowCircle, BiDownArrowCircle } from 'react-icons/bi';
 
 function DishShow() {
   const params = useParams();
-  const { dishes } = useSelector((state) => state.dish);
-  const currentDish = dishes.find((dish) => dish._id === params.id);
+  const dispatch = useDispatch();
+  const { dishes, dishLoading } = useSelector((state) => state.dish);
+  const currentDish = dishes.find((dish) => dish._id === params.id)
+    ? dishes.find((dish) => dish._id === params.id)
+    : {};
   const [ingredientsToggleOpen, setIngredientsToggleOpen] = useState(false);
 
   const handleShowIngredients = () => {
@@ -17,6 +22,43 @@ function DishShow() {
       setIngredientsToggleOpen(true);
     }
   };
+
+  const translateUnits = (unitLabel) => {
+    let unitTrad;
+    switch (unitLabel) {
+      case 'unity':
+        unitTrad = 'unité';
+        break;
+      case 'soupeSpoon':
+        unitTrad = 'c. à s.';
+        break;
+      case 'coffeeSpoon':
+        unitTrad = 'c. à c.';
+        break;
+      case 'kilo':
+        unitTrad = 'kg';
+        break;
+      case 'gram':
+        unitTrad = 'g';
+        break;
+      case 'centigram':
+        unitTrad = 'cg';
+        break;
+      case 'liter':
+        unitTrad = 'litre';
+        break;
+      case 'centiliter':
+        unitTrad = 'cl';
+        break;
+      default:
+        unitLabel = '';
+    }
+    return unitTrad;
+  };
+
+  if (dishLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div>
@@ -43,7 +85,9 @@ function DishShow() {
                       key={ingredientsInfos._id}
                       className="dish-show-ingredients-li"
                     >{`${ingredientsInfos.ingredientName} (${
-                      ingredientsInfos.quantity + ' ' + ingredientsInfos.unit
+                      ingredientsInfos.quantity +
+                      ' ' +
+                      translateUnits(ingredientsInfos.unit)
                     })`}</li>
                   );
                 } else {
@@ -58,13 +102,18 @@ function DishShow() {
             </ul>
           )}
           <br />
-          {currentDish.recipe.length > 0 && (
+          {currentDish.recipe !== '' ? (
             <div className="dish-show-recipe">
               <h3>Recette</h3>
               <p>{currentDish.recipe}</p>
             </div>
+          ) : (
+            <p>Tu n'as pas renseigné de recette</p>
           )}
-          <div className="delete-dish-link">
+          <div
+            className="delete-dish-link"
+            onClick={() => dispatch(deleteDish(params.id))}
+          >
             <p>Supprimer le plat</p>
           </div>
           <div className="space-behind-fixed-button"></div>
@@ -72,7 +121,12 @@ function DishShow() {
       </div>
       <FixedActionButton
         actions={[
-          { role: '', roleDescription: 'Modifier le plat', css: 'edit' },
+          {
+            role: 'editDish',
+            roleDescription: 'Modifier le plat',
+            css: 'edit',
+            currentID: currentDish._id,
+          },
           {
             role: '',
             roleDescription: 'Ajouter le plat a un menu',

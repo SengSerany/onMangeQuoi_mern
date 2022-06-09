@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { indexDishes } from '../../features/dish/dishSlice';
 import DishCardIndex from '../../components/DishCardIndex';
-import DishToasts from '../../components/DishToasts';
 import FixedActionButton from '../../components/FixedActionButton';
 import Spinner from '../../components/Spinner';
 
@@ -27,7 +26,6 @@ function DishIndex() {
   return (
     <div>
       <div className="page-container">
-        <DishToasts />
         <div className="dish-index-page">
           <h1>Mes plats</h1>
           <br />

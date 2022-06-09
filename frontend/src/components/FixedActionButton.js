@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 
 function FixedActionButton({
-  actions = [{ role: '', roleDescription: '', css: '' }],
+  actions = [{ role: '', roleDescription: '', css: '', currentID: '' }],
 }) {
-  const destRoute = (role) => {
+  const destRoute = (role, currentID) => {
     if (role === 'createDish') {
       return '/dishes/new';
+    } else if (role === 'editDish') {
+      return `/dishes/${currentID}/edit`;
     } else {
       return '/dishes';
     }
@@ -20,10 +22,12 @@ function FixedActionButton({
         return (
           <Link
             key={`action-${key}`}
-            to={destRoute(action.role)}
+            to={destRoute(action.role, action.currentID)}
             className={`${action.css}-btn`}
           >
-            <button>{action.roleDescription}</button>
+            <button className="action-role-description">
+              {action.roleDescription}
+            </button>
           </Link>
         );
       })}
