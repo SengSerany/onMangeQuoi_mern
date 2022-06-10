@@ -12,7 +12,7 @@ const indexMenus = asyncHandler(async (req, res) => {
     for (let i = 0; i < menus.length; i++) {
       const currentMenuOfDish = await MenuOfDish.find({ menuID: menus[i]._id });
       if (currentMenuOfDish.length > 0) {
-        linksMenuDish.push(currentMenuOfDish);
+        linksMenuDish.push(...currentMenuOfDish);
       }
     }
 
