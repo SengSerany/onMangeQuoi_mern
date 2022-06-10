@@ -18,6 +18,7 @@ connectDB();
 const authRouter = require('./routes/AuthRoutes');
 const dishRouter = require('./routes/dishRoutes');
 const menuRouter = require('./routes/menuRoutes');
+const menuOfDishRouter = require('./routes/menuOfDishRoutes');
 
 // Middleware
 app.use(express.json());
@@ -41,6 +42,7 @@ app.use(passport.session());
 app.use('/api/v1/menu', menuRouter);
 app.use('/api/v1/dish', dishRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/menu-of-dish', menuOfDishRouter);
 
 // Session
 passport.use(Auth.createStrategy());
