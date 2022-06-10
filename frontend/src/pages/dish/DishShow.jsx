@@ -129,9 +129,10 @@ function DishShow() {
             currentID: currentDish._id,
           },
           {
-            role: '',
+            role: 'addToMenu',
             roleDescription: 'Ajouter le plat a un menu',
             css: 'add',
+            currentID: currentDish._id,
           },
         ]}
       />

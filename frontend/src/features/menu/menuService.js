@@ -29,11 +29,19 @@ const deleteMenus = async (menuID) => {
   return response.data;
 };
 
+// Add dish to menu
+const addDishInMenu = async (linkInfos) => {
+  const response = await axios.post('/api/v1/menu-of-dish/new', linkInfos);
+  console.log(response);
+  return response.data;
+};
+
 const menuService = {
   getAllMenus,
   createNewMenus,
   updateMenus,
   deleteMenus,
+  addDishInMenu,
 };
 
 export default menuService;

@@ -1,23 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { indexMenus } from '../../features/menu/menuSlice';
+import { useSelector } from 'react-redux';
 import MenuCardIndex from '../../components/MenuCardIndex';
 import FixedActionButton from '../../components/FixedActionButton';
 import Spinner from '../../components/Spinner';
 
 function MenuIndex() {
-  const dispatch = useDispatch();
   const { menus, menuLoading } = useSelector((state) => state.menu);
-  const [isRead, setIsRead] = useState(false);
-
-  useEffect(() => {
-    if (isRead) return;
-    setIsRead(true);
-    if (menus.length === 0) {
-      dispatch(indexMenus());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (menuLoading) {
     return <Spinner />;

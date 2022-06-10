@@ -12,6 +12,8 @@ function FixedActionButton({
       return `/menus/new`;
     } else if (role === 'editMenu') {
       return `/menus/${currentID}/edit`;
+    } else if (role === 'addToMenu') {
+      return `/dishes/${currentID}/add`;
     } else {
       return '/';
     }

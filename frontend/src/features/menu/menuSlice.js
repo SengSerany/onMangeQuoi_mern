@@ -78,6 +78,23 @@ export const deleteMenu = createAsyncThunk(
   }
 );
 
+export const addDishToMenu = createAsyncThunk(
+  'menu/addDishToMenu',
+  async (linkInfos, thunkAPI) => {
+    try {
+      return await menuService.addDishInMenu(linkInfos);
+    } catch (error) {
+      const menuMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.menuMessage) ||
+        error.menuMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(menuMessage);
+    }
+  }
+);
+
 export const menuSlice = createSlice({
   name: 'menu',
   initialState,
@@ -150,6 +167,20 @@ export const menuSlice = createSlice({
         state.menuMessage = `Tu as supprimer le menu "${action.payload.name}"`;
       })
       .addCase(deleteMenu.rejected, (state, action) => {
+        state.menuLoading = false;
+        state.menuError = true;
+        state.menuMessage = action.payload;
+      })
+      .addCase(addDishToMenu.pending, (state) => {
+        state.menuLoading = true;
+      })
+      .addCase(addDishToMenu.fulfilled, (state, action) => {
+        state.menuLoading = false;
+        state.menuSuccess = true;
+        state.dishesInMenu.push(action.payload.dish);
+        state.menuMessage = 'Ton plat a bien été ajouté dans le menu';
+      })
+      .addCase(addDishToMenu.rejected, (state, action) => {
         state.menuLoading = false;
         state.menuError = true;
         state.menuMessage = action.payload;
