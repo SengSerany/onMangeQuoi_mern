@@ -1,10 +1,27 @@
 const asyncHandler = require('express-async-handler');
 const Menu = require('../models/menuModel');
+const MenuOfDish = require('../models/menuOfDishModel');
 
 // Index
 const indexMenus = asyncHandler(async (req, res) => {
   const menus = await Menu.find({ authID: req.user._id });
-  res.status(200).json({ endpoint: 'index menu', menus });
+
+  const mapLinksMenuDish = async () => {
+    let linksMenuDish = [];
+
+    for (let i = 0; i < menus.length; i++) {
+      const currentMenuOfDish = await MenuOfDish.find({ menuID: menus[i]._id });
+      if (currentMenuOfDish.length > 0) {
+        linksMenuDish.push(currentMenuOfDish);
+      }
+    }
+
+    return linksMenuDish;
+  };
+
+  const menusOfDishes = await mapLinksMenuDish();
+
+  res.status(200).json({ endpoint: 'index menu', menus, menusOfDishes });
 });
 
 // Show
