@@ -1,23 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { indexDishes } from '../../features/dish/dishSlice';
+import { useSelector } from 'react-redux';
 import DishCardIndex from '../../components/DishCardIndex';
 import FixedActionButton from '../../components/FixedActionButton';
 import Spinner from '../../components/Spinner';
 
 function DishIndex() {
-  const dispatch = useDispatch();
   const { dishes, dishLoading } = useSelector((state) => state.dish);
-  const [isRead, setIsRead] = useState(false);
-
-  useEffect(() => {
-    if (isRead) return;
-    setIsRead(true);
-    if (dishes.length === 0) {
-      dispatch(indexDishes());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (dishLoading) {
     return <Spinner />;

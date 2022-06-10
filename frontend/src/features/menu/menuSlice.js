@@ -3,6 +3,7 @@ import menuService from './menuService';
 
 const initialState = {
   menus: [],
+  dishesInMenu: [],
   menuError: false,
   menuSuccess: false,
   menuLoading: false,
@@ -95,6 +96,7 @@ export const menuSlice = createSlice({
       })
       .addCase(indexMenus.fulfilled, (state, action) => {
         state.menus = action.payload.menus;
+        state.dishesInMenu = action.payload.menusOfDishes;
         state.menuLoading = false;
       })
       .addCase(indexMenus.rejected, (state, action) => {

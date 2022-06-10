@@ -276,6 +276,8 @@ a .auth-redirect-button {
 }
 
 .card-index {
+  display: flex;
+  justify-content: space-between;
   padding: 0.05rem 1rem;
   margin: 0.2rem 0;
   color: #000000;
