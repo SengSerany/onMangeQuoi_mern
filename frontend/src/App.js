@@ -8,6 +8,7 @@ import DishIndex from './pages/dish/DishIndex';
 import DishShow from './pages/dish/DishShow';
 import DishNew from './pages/dish/DishNew';
 import DishEdit from './pages/dish/DishEdit';
+import DishAddToMenu from './pages/dish/DishAddToMenu';
 import MenuIndex from './pages/menu/MenuIndex';
 import MenuNew from './pages/menu/MenuNew';
 import MenuShow from './pages/menu/MenuShow';
@@ -32,6 +33,7 @@ function App() {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/dishes/:id/add" element={<DishAddToMenu />} />
             <Route exact path="/dishes/:id/edit" element={<DishEdit />} />
             <Route exact path="/dishes/:id" element={<DishShow />} />
             <Route exact path="/dishes/new" element={<DishNew />} />

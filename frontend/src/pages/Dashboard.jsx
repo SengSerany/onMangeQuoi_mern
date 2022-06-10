@@ -2,23 +2,28 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { indexDishes } from '../features/dish/dishSlice';
+import { indexMenus } from '../features/menu/menuSlice';
 import Spinner from '../components/Spinner';
 
 function Dashboard() {
   const dispatch = useDispatch();
   const { dishes, dishLoading } = useSelector((state) => state.dish);
+  const { menus, menuLoading } = useSelector((state) => state.menu);
   const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
     if (isRead) return;
     setIsRead(true);
-    if (dishes.length === 0) {
+    if (dishes && dishes.length === 0) {
       dispatch(indexDishes());
+    }
+    if (menus && menus.length === 0) {
+      dispatch(indexMenus());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (dishLoading) {
+  if (dishLoading || menuLoading) {
     return <Spinner />;
   }
 

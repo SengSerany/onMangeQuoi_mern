@@ -43,7 +43,7 @@ function MenuShow() {
               );
             })}
           <div className="delete-link" onClick={() => dispatch(deleteMenu(id))}>
-            <p>Supprimer le plat</p>
+            <p>Supprimer le menu</p>
           </div>
           <div className="space-behind-fixed-button"></div>
         </div>
