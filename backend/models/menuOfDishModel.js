@@ -14,7 +14,7 @@ const MenuOfDishSchema = new mongoose.Schema(
     },
     forNbPeople: {
       type: Number,
-      required: [true, 'You must add a people number'],
+      default: 1,
     },
   },
   { timestamps: true }

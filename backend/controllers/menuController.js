@@ -41,13 +41,28 @@ const newMenu = asyncHandler(async (req, res) => {
 
 // Create
 const createMenu = asyncHandler(async (req, res) => {
-  const { menuName } = req.body;
+  let linksMenuDish = [];
+  const { menuName, addedDishesID } = req.body;
   if (!menuName) {
     res.status(400);
     throw new Error('A name for menu must be assign');
   }
+
   const menu = await Menu.create({ menuName, authID: req.user._id });
-  res.status(200).json({ endpoint: 'create menu', menu: menu });
+
+  if (addedDishesID) {
+    for (let i = 0; i < addedDishesID.length; i++) {
+      const setDishInMenu = await MenuOfDish.create({
+        menuID: menu._id,
+        dishID: addedDishesID[i],
+      });
+      linksMenuDish.push(setDishInMenu);
+    }
+  }
+
+  res
+    .status(200)
+    .json({ endpoint: 'create menu', menu: menu, setDishes: linksMenuDish });
 });
 
 // Edit
@@ -81,7 +96,9 @@ const updateMenu = asyncHandler(async (req, res) => {
 const deleteMenu = asyncHandler(async (req, res) => {
   const currentMenu = await Menu.findById(req.params.id);
   if (currentMenu.authID.toString() === req.user._id.toString()) {
+    await MenuOfDish.deleteMany({ menuID: currentMenu._id });
     currentMenu.remove();
+
     res.status(200).json({
       entre_point: 'Delete menu',
       id: currentMenu._id,
