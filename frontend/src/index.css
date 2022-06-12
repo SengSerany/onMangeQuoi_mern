@@ -216,6 +216,20 @@ form button {
   background-color: #e5e5e5;
 }
 
+.box-label-checkbox {
+  margin: 0.5rem 0;
+}
+
+.component-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.component-label-checkbox {
+  font-family: 'Tiro Devanagari Sanskrit', serif !important;
+  padding: 0.2rem 0 0 0.5rem;
+}
+
 .add-ingredients-button {
   display: flex;
   flex-direction: column;

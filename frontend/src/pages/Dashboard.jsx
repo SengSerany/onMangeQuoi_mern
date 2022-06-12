@@ -23,7 +23,11 @@ function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (dishLoading || menuLoading) {
+  if (dishLoading) {
+    return <Spinner />;
+  }
+
+  if (menuLoading) {
     return <Spinner />;
   }
 

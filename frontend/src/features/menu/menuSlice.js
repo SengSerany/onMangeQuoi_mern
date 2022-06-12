@@ -128,6 +128,7 @@ export const menuSlice = createSlice({
         state.menuLoading = false;
         state.menuSuccess = true;
         state.menus.push(action.payload.menu);
+        state.dishesInMenu.push(...action.payload.setDishes);
         state.menuMessage = `Tu as crée le nouveau menu: "${action.payload.menu.menuName}"`;
       })
       .addCase(createMenu.rejected, (state, action) => {
@@ -163,6 +164,9 @@ export const menuSlice = createSlice({
         state.menuSuccess = true;
         state.menus = state.menus.filter(
           (menus) => menus._id !== action.payload.id
+        );
+        state.dishesInMenu = state.dishesInMenu.filter(
+          (link) => link.menuID !== action.payload.id
         );
         state.menuMessage = `Tu as supprimer le menu "${action.payload.name}"`;
       })
