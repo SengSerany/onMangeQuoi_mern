@@ -8,6 +8,7 @@ function MenuForm({ currentMenu = { menuName: '', dishesInMenu: [] } }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const { dishes } = useSelector((state) => state.dish);
+  const { dishesInMenu } = useSelector((state) => state.menu);
 
   const actionBtnLabel = () => {
     if (location.pathname.endsWith('new')) {
@@ -23,8 +24,31 @@ function MenuForm({ currentMenu = { menuName: '', dishesInMenu: [] } }) {
         return {
           nameDish: dish.name,
           IDDish: dish._id,
+          forNbPeople: 1,
           isCheck: false,
         };
+      });
+    } else if (location.pathname.endsWith('edit')) {
+      const checkedDishes = dishesInMenu.filter((dish) => dish.menuID === id);
+      return dishes.map((dish) => {
+        if (checkedDishes.some((checkDish) => checkDish.dishID === dish._id)) {
+          const currentDishMenuLink = checkedDishes.find(
+            (dishInThisMenu) => dishInThisMenu.dishID === dish._id
+          );
+          return {
+            nameDish: dish.name,
+            IDDish: dish._id,
+            forNbPeople: currentDishMenuLink.forNbPeople,
+            isCheck: true,
+          };
+        } else {
+          return {
+            nameDish: dish.name,
+            IDDish: dish._id,
+            forNbPeople: 1,
+            isCheck: false,
+          };
+        }
       });
     }
   };
@@ -45,7 +69,8 @@ function MenuForm({ currentMenu = { menuName: '', dishesInMenu: [] } }) {
   };
 
   const handleChangeCheckbox = (position, e) => {
-    const { name, value } = e.target;
+    const { value, type } = e.target;
+
     const updatedCheckedState = isChecked.map((item, index) => {
       if (index === position) {
         return {
@@ -56,35 +81,51 @@ function MenuForm({ currentMenu = { menuName: '', dishesInMenu: [] } }) {
         return item;
       }
     });
-    setIsChecked(updatedCheckedState);
 
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [name]: value,
-      };
+    if (type === 'checkbox') {
+      setIsChecked(updatedCheckedState);
+    }
+
+    const updatedNbPeoplevalue = isChecked.map((item, index) => {
+      if (index === position) {
+        return {
+          ...item,
+          forNbPeople: value,
+        };
+      } else {
+        return item;
+      }
     });
+
+    if (type === 'number') {
+      setIsChecked(updatedNbPeoplevalue);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (location.pathname.endsWith('new')) {
-      let addedDishesID = [];
-      for (let i = 0; i < isChecked.length; i++) {
-        if (isChecked[i].isCheck) {
-          console.log({ [i]: isChecked[i].isCheck });
-          addedDishesID.push(isChecked[i].IDDish);
-        }
+    let addedDishesID = [];
+    let addedDishesPeopleNb = [];
+    for (let i = 0; i < isChecked.length; i++) {
+      if (isChecked[i].isCheck) {
+        addedDishesID.push(isChecked[i].IDDish);
+        addedDishesPeopleNb.push(isChecked[i].forNbPeople);
       }
+    }
+    if (location.pathname.endsWith('new')) {
       const reqFormData = {
         ...formData,
         addedDishesID,
+        addedDishesPeopleNb,
       };
       dispatch(createMenu(reqFormData));
+      console.log(reqFormData);
     } else if (location.pathname.endsWith('edit')) {
       const reqFormData = {
         ...formData,
         menuId: id,
+        addedDishesID,
+        addedDishesPeopleNb,
       };
       dispatch(updateMenu(reqFormData));
     }
@@ -94,44 +135,65 @@ function MenuForm({ currentMenu = { menuName: '', dishesInMenu: [] } }) {
     console.log(isChecked);
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <button onClick={log}>LOG</button>
-      <div className="form-control">
-        <label>Nom du menu</label>
-        <input
-          type="text"
-          className=""
-          id="menuName"
-          name="menuName"
-          value={menuName}
-          placeholder="Ex: Noël, Semaine 12, ect."
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-control">
-        <label className="box-label-checkbox">
-          Ajouter des plats dans le menu ?
-        </label>
-        {dishes.map((dish, index) => {
-          return (
-            <div className="component-checkbox">
-              <input
-                key={dish._id}
-                type="checkbox"
-                className="card-index"
-                id={dish._id}
-                // value={menuName}
-                checked={isChecked[index].isCheck}
-                onChange={(e) => handleChangeCheckbox(index, e)}
-              />
-              <label className="component-label-checkbox">{dish.name}</label>
-            </div>
-          );
-        })}
-      </div>
-      <br />
-      <button type="submit">{buttonLabel}</button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="form-control">
+          <label>Nom du menu</label>
+          <input
+            type="text"
+            className=""
+            id="menuName"
+            name="menuName"
+            value={menuName}
+            placeholder="Ex: Noël, Semaine 12, ect."
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-control">
+          <label className="box-label-checkbox">
+            {location.pathname.endsWith('new') ? 'Ajouter d' : 'Modifier l'}es
+            plats dans le menu ?
+          </label>
+          {dishes.map((dish, index) => {
+            return (
+              <div key={dish._id}>
+                <div className="component-checkbox">
+                  <input
+                    type="checkbox"
+                    className="card-index"
+                    id={`dish-${dish._id}`}
+                    value={menuName}
+                    checked={isChecked[index].isCheck}
+                    onChange={(e) => handleChangeCheckbox(index, e)}
+                  />
+                  <label className="component-label-checkbox">
+                    {dish.name}
+                  </label>
+                </div>
+                {isChecked[index].isCheck && (
+                  <div className="menuForm-NbPeople">
+                    <label>Pour combien de personne ?</label>
+                    <input
+                      type="number"
+                      min="1"
+                      className=""
+                      id={`forNbPeople-${dish._id}`}
+                      value={isChecked[index].forNbPeople}
+                      checked={isChecked[index].isCheck}
+                      placeholder="Pour cb personne ?"
+                      onChange={(e) => handleChangeCheckbox(index, e)}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <br />
+        <button type="submit">{buttonLabel}</button>
+      </form>
+    </>
   );
 }
 
