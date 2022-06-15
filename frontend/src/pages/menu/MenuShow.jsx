@@ -57,9 +57,10 @@ function MenuShow() {
             currentID: currentMenu._id,
           },
           {
-            role: '',
+            role: 'createShoppingList',
             roleDescription: 'Créer la liste de course',
             css: 'add',
+            by: { menu: currentMenu._id },
           },
         ]}
       />
