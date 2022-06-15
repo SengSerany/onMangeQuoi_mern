@@ -216,6 +216,15 @@ form button {
   background-color: #e5e5e5;
 }
 
+.menuForm-NbPeople {
+  margin-left: 1.35rem;
+}
+
+.menuForm-NbPeople label {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
 .box-label-checkbox {
   margin: 0.5rem 0;
 }

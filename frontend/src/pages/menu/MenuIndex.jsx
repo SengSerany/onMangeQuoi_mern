@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import InfosCharge from '../../components/InfosCharge';
 import MenuCardIndex from '../../components/MenuCardIndex';
 import FixedActionButton from '../../components/FixedActionButton';
 import Spinner from '../../components/Spinner';
@@ -12,6 +13,7 @@ function MenuIndex() {
 
   return (
     <div>
+      <InfosCharge />
       <div className="page-container">
         <div className="flex-column">
           <h1>Mes Menus</h1>

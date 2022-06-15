@@ -149,6 +149,13 @@ export const menuSlice = createSlice({
             return menu;
           }
         });
+
+        state.dishesInMenu = state.dishesInMenu.filter(
+          (dishInMenu) => dishInMenu.menuID !== action.payload.updatedMenu._id
+        );
+
+        state.dishesInMenu.push(...action.payload.setDishes);
+
         state.menuMessage = `Tu as modifié le menu "${action.payload.updatedMenu.menuName}"`;
       })
       .addCase(updateMenu.rejected, (state, action) => {
