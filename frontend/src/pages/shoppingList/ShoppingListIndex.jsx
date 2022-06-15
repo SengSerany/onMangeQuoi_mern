@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux';
 import InfosCharge from '../../components/InfosCharge';
-import MenuCardIndex from '../../components/MenuCardIndex';
+import ShoppingListCardIndex from '../../components/ShoppingListCardIndex';
 import FixedActionButton from '../../components/FixedActionButton';
 import Spinner from '../../components/Spinner';
 
-function MenuIndex() {
-  const { menus, menuLoading } = useSelector((state) => state.menu);
+function ShoppingListIndex() {
   const { dishLoading } = useSelector((state) => state.dish);
-  const { shoppingListLoading } = useSelector((state) => state.shoppingList);
+  const { menuLoading } = useSelector((state) => state.menu);
+  const { shoppingLists, shoppingListLoading } = useSelector(
+    (state) => state.shoppingList
+  );
 
   if (dishLoading) {
     return <Spinner />;
@@ -26,19 +28,22 @@ function MenuIndex() {
       <InfosCharge />
       <div className="page-container">
         <div className="flex-column">
-          <h1>Mes Menus</h1>
+          <h1>Mes listes de course</h1>
           <br />
-          {menus.length !== 0 &&
-            menus.map((menuInfos) => (
-              <MenuCardIndex key={menuInfos._id} menu={menuInfos} />
+          {shoppingLists &&
+            shoppingLists.map((shoppingList) => (
+              <ShoppingListCardIndex
+                key={shoppingList._id}
+                shoppingList={shoppingList}
+              />
             ))}
         </div>
       </div>
       <FixedActionButton
         actions={[
           {
-            role: 'createMenu',
-            roleDescription: 'Créer un nouveau menu',
+            role: 'createShoppingList',
+            roleDescription: 'Créer une nouvelle liste de course',
             css: 'add',
           },
         ]}
@@ -47,4 +52,4 @@ function MenuIndex() {
   );
 }
 
-export default MenuIndex;
+export default ShoppingListIndex;

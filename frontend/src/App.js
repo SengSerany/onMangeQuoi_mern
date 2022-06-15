@@ -13,9 +13,13 @@ import MenuIndex from './pages/menu/MenuIndex';
 import MenuNew from './pages/menu/MenuNew';
 import MenuShow from './pages/menu/MenuShow';
 import MenuEdit from './pages/menu/MenuEdit';
+import ShoppingListIndex from './pages/shoppingList/ShoppingListIndex';
+import ShoppingListShow from './pages/shoppingList/ShoppingListShow';
+import ShoppingListNew from './pages/shoppingList/ShoppingListNew';
 import AuthToasts from './components/AuthToasts';
 import DishToasts from './components/DishToasts';
 import MenuToasts from './components/MenuToasts';
+import ShoppingListToasts from './components/ShoppingListsToasts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -28,6 +32,7 @@ function App() {
           <AuthToasts />
           <DishToasts />
           <MenuToasts />
+          <ShoppingListToasts />
           <Routes>
             <Route exact path="/" element={<Dashboard />} />
             <Route exact path="/register" element={<Register />} />
@@ -42,6 +47,21 @@ function App() {
             <Route exact path="/menus/:id" element={<MenuShow />} />
             <Route exact path="/menus/new" element={<MenuNew />} />
             <Route exact path="/menus" element={<MenuIndex />} />
+            <Route
+              exact
+              path="/shopping-list/:id"
+              element={<ShoppingListShow />}
+            />
+            <Route
+              exact
+              path="/shopping-list/new"
+              element={<ShoppingListNew />}
+            />
+            <Route
+              exact
+              path="/shopping-list"
+              element={<ShoppingListIndex />}
+            />
           </Routes>
         </div>
       </Router>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 function FixedActionButton({
-  actions = [{ role: '', roleDescription: '', css: '', currentID: '' }],
+  actions = [{ role: '', roleDescription: '', css: '', currentID: '', by: {} }],
 }) {
   const destRoute = (role, currentID) => {
     if (role === 'createDish') {
@@ -14,8 +14,24 @@ function FixedActionButton({
       return `/menus/${currentID}/edit`;
     } else if (role === 'addToMenu') {
       return `/dishes/${currentID}/add`;
+    } else if (role === 'createShoppingList') {
+      return `/shopping-list/new`;
+    } else if (role === 'editShoppingList') {
+      return `/shopping-list/${currentID}/new`;
     } else {
       return '/';
+    }
+  };
+
+  const passProps = (action) => {
+    if (action.by && actions.by !== {}) {
+      if (action.by.hasOwnProperty('menu')) {
+        return action.by;
+      } else {
+        return {};
+      }
+    } else {
+      return {};
     }
   };
 
@@ -30,6 +46,7 @@ function FixedActionButton({
             key={`action-${key}`}
             to={destRoute(action.role, action.currentID)}
             className={`${action.css}-btn`}
+            state={passProps(action)}
           >
             <button className="action-role-description">
               {action.roleDescription}

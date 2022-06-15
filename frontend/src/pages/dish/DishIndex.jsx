@@ -6,8 +6,18 @@ import Spinner from '../../components/Spinner';
 
 function DishIndex() {
   const { dishes, dishLoading } = useSelector((state) => state.dish);
+  const { menuLoading } = useSelector((state) => state.menu);
+  const { shoppingListLoading } = useSelector((state) => state.shoppingList);
 
   if (dishLoading) {
+    return <Spinner />;
+  }
+
+  if (menuLoading) {
+    return <Spinner />;
+  }
+
+  if (shoppingListLoading) {
     return <Spinner />;
   }
 
