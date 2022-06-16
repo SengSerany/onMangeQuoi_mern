@@ -96,7 +96,7 @@ export const shoppingListSlice = createSlice({
       })
       .addCase(indexShoppingLists.fulfilled, (state, action) => {
         state.shoppingLists = action.payload.shoppingLists;
-        // state.itemsInLists = action.payload.shoppingLists;
+        state.itemsInLists = action.payload.itemsList;
         state.shoppingListLoading = false;
       })
       .addCase(indexShoppingLists.rejected, (state, action) => {
@@ -111,7 +111,7 @@ export const shoppingListSlice = createSlice({
         state.shoppingListLoading = false;
         state.shoppingListSuccess = true;
         state.shoppingLists.push(action.payload.shoppingList);
-        // state.itemsInLists.push(...action.payload.setDishes);
+        state.itemsInLists.push(...action.payload.itemsList);
         state.shoppingListMessage = `Tu as crée une nouvelle liste de course : "${action.payload.shoppingList.shoppingListName}"`;
       })
       .addCase(createShoppingList.rejected, (state, action) => {
@@ -164,7 +164,7 @@ export const shoppingListSlice = createSlice({
         state.shoppingListLoading = false;
         state.shoppingListError = true;
         state.shoppingListMessage = action.payload;
-      })
+      }),
 });
 
 export const { resetShoppingListState } = shoppingListSlice.actions;

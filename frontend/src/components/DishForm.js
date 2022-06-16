@@ -78,7 +78,7 @@ function DishForm({
     }
   };
 
-  const handleAddIngredients = async () => {
+  const handleAddIngredients = () => {
     setIngredientsElements((prevIngredients) => {
       return [...prevIngredients, ingredientInitialState];
     });

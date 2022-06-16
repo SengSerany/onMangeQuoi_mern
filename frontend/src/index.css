@@ -277,7 +277,7 @@ a.section-category-add {
 }
 
 .add-ingredients-button p {
-  font-family: Oswald, sans-serif;
+  font-family: 'Oswald', sans-serif;
   letter-spacing: 0.075rem;
   margin: 0.5rem;
   padding: 0;
@@ -385,7 +385,7 @@ a .auth-redirect-button {
 
 .dish-show-page h3 {
   margin: 0.65rem;
-  font-family: Oswald, sans-serif;
+  font-family: 'Oswald', sans-serif;
   letter-spacing: 0.03rem;
 }
 
@@ -403,7 +403,7 @@ a .auth-redirect-button {
   width: 100%;
   justify-content: center;
   color: #cc2e2e;
-  font-family: Oswald, sans-serif;
+  font-family: 'Oswald', sans-serif;
   font-weight: bold;
   letter-spacing: 0.03rem;
 }
@@ -420,7 +420,7 @@ a .auth-redirect-button {
   height: 2.75rem;
   width: 100%;
   border: none;
-  font-family: Oswald, sans-serif;
+  font-family: 'Oswald', sans-serif;
   letter-spacing: 0.05rem;
   font-weight: 700;
   background-color: #d8d8d8;
@@ -448,6 +448,28 @@ a .auth-redirect-button {
 .action-role-description {
   font-weight: 400;
   font-size: 1rem;
+}
+
+.shopping-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.shopping-control button {
+  border: none;
+  height: 3rem;
+  margin: 0.2rem 0;
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+}
+
+.shopping-control button.unshopped {
+  background-color: #ffd007;
+}
+
+.shopping-control button.shopped {
+  background-color: #e4e4e4;
+  color: #6e6e6e;
+  text-decoration: line-through;
 }
 
 .spinner {
