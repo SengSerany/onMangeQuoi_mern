@@ -61,6 +61,23 @@ export const updateShoppingList = createAsyncThunk(
   }
 );
 
+export const deleteShoppingList = createAsyncThunk(
+  'shoppingList/delete',
+  async (shoppingListID, thunkAPI) => {
+    try {
+      return await shoppingListService.deleteShoppingLists(shoppingListID);
+    } catch (error) {
+      const shoppingListMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.shoppingListMessage) ||
+        error.shoppingListMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(shoppingListMessage);
+    }
+  }
+);
+
 export const shoppingListSlice = createSlice({
   name: 'shoppingList',
   initialState,
@@ -128,7 +145,26 @@ export const shoppingListSlice = createSlice({
         state.shoppingListLoading = false;
         state.shoppingListError = true;
         state.shoppingListMessage = action.payload;
-      }),
+      })
+      .addCase(deleteShoppingList.pending, (state) => {
+        state.shoppingListLoading = true;
+      })
+      .addCase(deleteShoppingList.fulfilled, (state, action) => {
+        state.shoppingListLoading = false;
+        state.shoppingListSuccess = true;
+        state.shoppingLists = state.shoppingLists.filter(
+          (shoppingLists) => shoppingLists._id !== action.payload.id
+        );
+        // state.itemsInLists = state.itemsInLists.filter(
+        //   (link) => link.shoppingListID !== action.payload.id
+        // );
+        state.shoppingListMessage = `Tu as supprimer la liste de course "${action.payload.name}"`;
+      })
+      .addCase(deleteShoppingList.rejected, (state, action) => {
+        state.shoppingListLoading = false;
+        state.shoppingListError = true;
+        state.shoppingListMessage = action.payload;
+      })
 });
 
 export const { resetShoppingListState } = shoppingListSlice.actions;
