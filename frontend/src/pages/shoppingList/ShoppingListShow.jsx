@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
-import { deleteShoppingList } from '../../features/shoppingList/shoppingListSlice';
+import {
+  deleteShoppingList,
+  updateItemsState,
+} from '../../features/shoppingList/shoppingListSlice';
 import FixedActionButton from '../../components/FixedActionButton';
 
 function ShoppingListShow() {
@@ -64,13 +67,16 @@ function ShoppingListShow() {
       case 'centiliter':
         unitTrad = 'cl';
         break;
+      case '':
+        unitTrad = '';
+        break;
       default:
         unitLabel = '';
     }
     return unitTrad;
   };
 
-  const handleItemsStatus = (event, indexComp) => {
+  const handleItemsStatus = (event, indexComp, currentItemInList) => {
     setItemsStatus((prevItemsStatus) => {
       return prevItemsStatus.map((state, indexInArray) => {
         if (indexInArray === indexComp) {
@@ -80,6 +86,12 @@ function ShoppingListShow() {
         }
       });
     });
+    dispatch(
+      updateItemsState({
+        ...currentItemInList,
+        isShopped: !currentItemInList.isShopped,
+      })
+    );
   };
 
   if (shoppingListLoading) {
@@ -97,9 +109,17 @@ function ShoppingListShow() {
             {currentItemsList && currentItemsList.length > 0 ? (
               currentItemsList.map((currentItemInList, index) => {
                 const showQuantityUnit = () => {
-                  if (currentItemInList.shopItemQuantity === 0) {
+                  if (
+                    currentItemInList.shopItemQuantity === 0 &&
+                    translateUnits(currentItemInList.shopItemUnit) === ''
+                  ) {
                     return '';
-                  } else {
+                  } else if (
+                    translateUnits(currentItemInList.shopItemUnit) === '' &&
+                    currentItemInList.shopItemQuantity
+                  ) {
+                    return `${' '}(${currentItemInList.shopItemQuantity})`;
+                  } else if (currentItemInList.shopItemQuantity > 0) {
                     return `${' '}(${
                       currentItemInList.shopItemQuantity +
                       ' ' +
@@ -112,7 +132,9 @@ function ShoppingListShow() {
                     key={currentItemInList._id}
                     type="button"
                     className={itemsStatus[index] ? 'shopped' : 'unshopped'}
-                    onClick={(e) => handleItemsStatus(e, index)}
+                    onClick={(e) =>
+                      handleItemsStatus(e, index, currentItemInList)
+                    }
                   >{`${
                     currentItemInList.shopItemName + showQuantityUnit()
                   }`}</button>

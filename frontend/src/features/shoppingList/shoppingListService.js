@@ -29,11 +29,21 @@ const deleteShoppingLists = async (shoppingListID) => {
   return response.data;
 };
 
+// Update shopItem state
+const changeShopItemState = async (shopItem) => {
+  const response = await axios.patch(
+    `${API_URL}/items/${shopItem._id}`,
+    shopItem
+  );
+  return response.data;
+};
+
 const shoppingListService = {
   getAllShoppingLists,
   createNewShoppingLists,
   updateShoppingLists,
   deleteShoppingLists,
+  changeShopItemState,
 };
 
 export default shoppingListService;

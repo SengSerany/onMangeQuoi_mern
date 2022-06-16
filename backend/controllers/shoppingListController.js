@@ -150,6 +150,28 @@ const deleteShoppingList = asyncHandler(async (req, res) => {
   }
 });
 
+const updateShopItems = asyncHandler(async (req, res) => {
+  const currentShopItem = await ShopItem.findById(req.params.id);
+  const currentShoppinglist = await ShoppingList.findById(
+    currentShopItem.shoppingListID
+  );
+  if (currentShoppinglist.authID.toString() === req.user._id.toString()) {
+    const updatedShopItem = await ShopItem.findByIdAndUpdate(
+      currentShopItem._id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({
+      entre_point: 'Update shop item',
+      updatedShopItem,
+    });
+  } else {
+    res.redirect('/api/v1/shopping-list/?list=false');
+  }
+});
+
 module.exports = {
   indexShoppingLists,
   newShoppingList,
@@ -158,4 +180,5 @@ module.exports = {
   updateShoppingList,
   deleteShoppingList,
   showShoppingList,
+  updateShopItems,
 };

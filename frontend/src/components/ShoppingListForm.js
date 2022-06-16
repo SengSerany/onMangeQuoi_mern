@@ -100,11 +100,20 @@ function ShoppingListForm({
     });
   };
 
+  const formatEntries = (string) => {
+    const lowerString = string.toLowerCase();
+    return lowerString.charAt(0).toUpperCase() + lowerString.slice(1);
+  };
+
   const handleChangeItems = (indexArg, event) => {
     const { name, value } = event.target;
     const newItemsData = items.map((item, indexElement) => {
       if (indexElement === indexArg) {
-        return { ...item, [name]: value };
+        if (name === 'shopItemName') {
+          return { ...item, shopItemName: formatEntries(value) };
+        } else {
+          return { ...item, [name]: value };
+        }
       } else {
         return item;
       }
@@ -166,6 +175,7 @@ function ShoppingListForm({
               >
                 <label>{`Produit ${index + 1}`}</label>
                 <select
+                  required
                   type="text"
                   className=""
                   name="shopItemType"
@@ -180,6 +190,7 @@ function ShoppingListForm({
                   <option value="not food">Non alimentaire</option>
                 </select>
                 <input
+                  required
                   type="text"
                   className=""
                   name="shopItemName"
@@ -188,6 +199,7 @@ function ShoppingListForm({
                   onChange={(event) => handleChangeItems(index, event)}
                 />
                 <input
+                  required
                   type="number"
                   min="0"
                   className=""
@@ -196,7 +208,9 @@ function ShoppingListForm({
                   placeholder="Quantité"
                   onChange={(event) => handleChangeItems(index, event)}
                 />
+                <label className="choose">Choisissez une unité de mesure</label>
                 <select
+                  required
                   type="text"
                   className=""
                   name="shopItemUnit"
@@ -204,9 +218,7 @@ function ShoppingListForm({
                   value={itemsInput.shopItemUnit}
                   onChange={(event) => handleChangeItems(index, event)}
                 >
-                  <option className="text-grey choose">
-                    Choisissez une unité de mesure
-                  </option>
+                  <option value="none">Aucune</option>
                   <option value="unity">Unité</option>
                   <option value="soupeSpoon">Cuillère à soupe</option>
                   <option value="coffeeSpoon">Cuillère à café</option>

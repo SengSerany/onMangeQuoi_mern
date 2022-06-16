@@ -209,8 +209,9 @@ form button {
   background-color: #e5e5e5;
 }
 
-.form-control select.choose {
-  color: #383838;
+label.choose {
+  font-size: 0.9rem;
+  font-weight: 400;
 }
 
 .form-control select option.choose {
@@ -464,10 +465,12 @@ a .auth-redirect-button {
 }
 
 .shopping-control button {
+  padding-top: 0.25rem;
   border: none;
   height: 3rem;
   margin: 0.2rem 0;
   font-family: 'Tiro Devanagari Sanskrit', serif;
+  font-size: 1rem;
 }
 
 .shopping-control button.unshopped {
