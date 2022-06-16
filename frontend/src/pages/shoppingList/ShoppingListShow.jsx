@@ -26,8 +26,8 @@ function ShoppingListShow() {
 
   const initialItemsStatus = () => {
     let statusArray = [];
-    if (itemsInLists) {
-      itemsInLists.forEach((item) => {
+    if (currentItemsList) {
+      currentItemsList.forEach((item) => {
         if (item.isShopped) {
         }
         statusArray.push(item.isShopped);

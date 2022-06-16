@@ -23,13 +23,11 @@ const indexShoppingLists = asyncHandler(async (req, res) => {
 
   const AllItemsList = await mapShopItemsUser();
 
-  res
-    .status(200)
-    .json({
-      endpoint: 'index shopping list',
-      shoppingLists,
-      itemsList: AllItemsList,
-    });
+  res.status(200).json({
+    endpoint: 'index shopping list',
+    shoppingLists,
+    itemsList: AllItemsList,
+  });
 });
 
 // Show
@@ -97,6 +95,9 @@ const editShoppingList = asyncHandler(async (req, res) => {
 
 // Update
 const updateShoppingList = asyncHandler(async (req, res) => {
+  let shopItemsList = [];
+  const { items } = req.body;
+
   const currentShoppingList = await ShoppingList.findById(req.params.id);
   if (currentShoppingList.authID.toString() === req.user._id.toString()) {
     const updatedShoppingList = await ShoppingList.findByIdAndUpdate(
@@ -107,9 +108,25 @@ const updateShoppingList = asyncHandler(async (req, res) => {
       }
     );
 
+    if (items) {
+      await ShopItem.deleteMany({ shoppingListID: currentShoppingList._id });
+
+      for (let i = 0; i < items.length; i++) {
+        const shopItem = await ShopItem.create({
+          shoppingListID: currentShoppingList._id,
+          shopItemType: items[i].shopItemType,
+          shopItemName: items[i].shopItemName,
+          shopItemQuantity: items[i].shopItemQuantity,
+          shopItemUnit: items[i].shopItemUnit,
+        });
+        shopItemsList.push(shopItem);
+      }
+    }
+
     res.status(200).json({
       entre_point: 'Update shopping list',
       updatedShoppingList,
+      itemsList: shopItemsList,
     });
   } else {
     res.redirect('/api/v1/shopping-list/?list=false');
@@ -120,6 +137,7 @@ const updateShoppingList = asyncHandler(async (req, res) => {
 const deleteShoppingList = asyncHandler(async (req, res) => {
   const currentShoppinglist = await ShoppingList.findById(req.params.id);
   if (currentShoppinglist.authID.toString() === req.user._id.toString()) {
+    await ShopItem.deleteMany({ shoppingListID: currentShoppinglist._id });
     currentShoppinglist.remove();
 
     res.status(200).json({

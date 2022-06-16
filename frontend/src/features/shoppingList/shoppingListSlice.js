@@ -133,11 +133,13 @@ export const shoppingListSlice = createSlice({
           }
         });
 
-        // state.itemsInLists = state.itemsInLists.filter(
-        //   (dishInShoppingList) => dishInShoppingList.shoppingListID !== action.payload.updatedShoppingList._id
-        // );
+        state.itemsInLists = state.itemsInLists.filter(
+          (dishInShoppingList) =>
+            dishInShoppingList.shoppingListID !==
+            action.payload.updatedShoppingList._id
+        );
 
-        // state.itemsInLists.push(...action.payload.setDishes);
+        state.itemsInLists.push(...action.payload.itemsList);
 
         state.shoppingListMessage = `Tu as modifié la liste de course "${action.payload.updatedShoppingList.shoppingListName}"`;
       })

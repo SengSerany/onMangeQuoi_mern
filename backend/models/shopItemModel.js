@@ -17,6 +17,7 @@ const ShopItemSchema = new mongoose.Schema(
     },
     shopItemQuantity: {
       type: Number,
+      default: 0,
     },
     shopItemUnit: {
       type: String,
