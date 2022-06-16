@@ -9,6 +9,7 @@ const {
   updateShoppingList,
   deleteShoppingList,
   showShoppingList,
+  updateShopItems,
 } = require('../controllers/shoppingListController');
 
 shoppingListRouter.get('/', authHandler, indexShoppingLists);
@@ -18,5 +19,6 @@ shoppingListRouter.get('/:id/edit', authHandler, editShoppingList);
 shoppingListRouter.patch('/:id/edit', authHandler, updateShoppingList);
 shoppingListRouter.delete('/:id', authHandler, deleteShoppingList);
 shoppingListRouter.get('/:id', authHandler, showShoppingList);
+shoppingListRouter.patch('/items/:id', authHandler, updateShopItems);
 
 module.exports = shoppingListRouter;

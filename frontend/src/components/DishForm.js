@@ -90,6 +90,7 @@ function DishForm({
         <div className="form-control">
           <label>Nom du plat</label>
           <input
+            required
             type="text"
             className=""
             id="name"
@@ -102,6 +103,7 @@ function DishForm({
         <div className="form-control">
           <label>Ingredient pour combien de personne ?</label>
           <input
+            required
             type="number"
             min="1"
             className=""
@@ -122,6 +124,7 @@ function DishForm({
               >
                 <label>{`Ingredient ${index + 1}`}</label>
                 <input
+                  required
                   type="text"
                   className=""
                   name="ingredientName"
@@ -130,6 +133,7 @@ function DishForm({
                   onChange={(event) => handleChangeIngredients(index, event)}
                 />
                 <input
+                  required
                   type="number"
                   className=""
                   name="quantity"
@@ -137,7 +141,9 @@ function DishForm({
                   placeholder="Quantité"
                   onChange={(event) => handleChangeIngredients(index, event)}
                 />
+                <label className="choose">Choisissez une unité de mesure</label>
                 <select
+                  required
                   type="text"
                   className=""
                   name="unit"
@@ -145,9 +151,7 @@ function DishForm({
                   value={ingredientInput.unit}
                   onChange={(event) => handleChangeIngredients(index, event)}
                 >
-                  <option className="text-grey">
-                    Choisissez une unité de mesure
-                  </option>
+                  <option value="none">Aucune</option>
                   <option value="unity">Unité</option>
                   <option value="soupeSpoon">Cuillère à soupe</option>
                   <option value="coffeeSpoon">Cuillère à café</option>
