@@ -17,11 +17,9 @@ const ShopItemSchema = new mongoose.Schema(
     },
     shopItemQuantity: {
       type: Number,
-      required: [true, 'You must add a quantity of the shopping item'],
     },
     shopItemUnit: {
       type: String,
-      required: [true, 'You must add a unit of the shopping item'],
     },
     isShopped: {
       type: Boolean,

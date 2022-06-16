@@ -15,17 +15,38 @@ function ShoppingListForm({
   const dispatch = useDispatch();
   const params = useParams();
   const { dishesInMenu } = useSelector((state) => state.menu);
+  const { dishes } = useSelector((state) => state.dish);
 
   let shopListID;
   if (location.pathname.endsWith('edit')) {
     shopListID = params.id;
   }
 
-  let dishesInThisMenu;
+  let itemsFromMenu = [];
   if (originMenu !== 'none') {
-    dishesInThisMenu = dishesInMenu.filter(
+    const dishesInThisMenu = dishesInMenu.filter(
       (link) => link.menuID === originMenu._id
     );
+
+    itemsFromMenu = dishesInThisMenu
+      .map((dishInthisMenu) => {
+        const currentDish = dishes.find(
+          (dish) => dish._id === dishInthisMenu.dishID
+        );
+        return currentDish.ingredients.map((ingredient, i) => {
+          const askedQuantity =
+            (ingredient.quantity / currentDish.forPeopleNumber) *
+            dishInthisMenu.forNbPeople;
+          const formatIngredientData = {
+            shopItemType: 'food',
+            shopItemName: ingredient.ingredientName,
+            shopItemQuantity: askedQuantity,
+            shopItemUnit: ingredient.unit,
+          };
+          return formatIngredientData;
+        });
+      })
+      .flat();
   }
 
   const actionBtnLabel = () => {
@@ -60,7 +81,9 @@ function ShoppingListForm({
   const [buttonLabel] = useState(actionBtnLabel());
   const [formData, setFormData] = useState(initialFormData());
   const { shoppingListName } = formData;
-  const [items, setItems] = useState([itemsInitialState]);
+  const [items, setItems] = useState(
+    itemsFromMenu.length > 0 ? itemsFromMenu : [itemsInitialState]
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -108,7 +131,7 @@ function ShoppingListForm({
   };
 
   const log = () => {
-    console.log(formData);
+    console.log(itemsFromMenu);
   };
 
   return (
@@ -175,7 +198,7 @@ function ShoppingListForm({
                   value={itemsInput.shopItemUnit}
                   onChange={(event) => handleChangeItems(index, event)}
                 >
-                  <option className="text-grey">
+                  <option className="text-grey choose">
                     Choisissez une unité de mesure
                   </option>
                   <option value="unity">Unité</option>
@@ -199,6 +222,9 @@ function ShoppingListForm({
         </div>
         <button type="submit">{buttonLabel}</button>
       </form>
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

@@ -205,14 +205,22 @@ form button {
   border: 1px solid #e5e5e5;
   padding: 0.65rem;
   font-family: 'Tiro Devanagari Sanskrit', serif;
-  color: #6e6e6e;
+  color: #000000;
   background-color: #e5e5e5;
+}
+
+.form-control select.choose {
+  color: #383838;
+}
+
+.form-control select option.choose {
+  color: #6e6e6e;
 }
 
 .form-control select option {
   padding-left: 0.75rem;
   height: 1.5rem;
-  color: #686868;
+  color: #000000;
 }
 
 .form-control select option:checked {

@@ -96,17 +96,26 @@ function ShoppingListShow() {
           <div className="shopping-control">
             {currentItemsList && currentItemsList.length > 0 ? (
               currentItemsList.map((currentItemInList, index) => {
+                const showQuantityUnit = () => {
+                  if (currentItemInList.shopItemQuantity === 0) {
+                    return '';
+                  } else {
+                    return `${' '}(${
+                      currentItemInList.shopItemQuantity +
+                      ' ' +
+                      translateUnits(currentItemInList.shopItemUnit)
+                    })`;
+                  }
+                };
                 return (
                   <button
                     key={currentItemInList._id}
                     type="button"
                     className={itemsStatus[index] ? 'shopped' : 'unshopped'}
                     onClick={(e) => handleItemsStatus(e, index)}
-                  >{`${currentItemInList.shopItemName} (${
-                    currentItemInList.shopItemQuantity +
-                    ' ' +
-                    translateUnits(currentItemInList.shopItemUnit)
-                  })`}</button>
+                  >{`${
+                    currentItemInList.shopItemName + showQuantityUnit()
+                  }`}</button>
                 );
               })
             ) : (
