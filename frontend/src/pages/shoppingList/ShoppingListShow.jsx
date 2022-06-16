@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
-import { deleteMenu } from '../../features/menu/menuSlice';
+import { deleteShoppingList } from '../../features/shoppingList/shoppingListSlice';
 import FixedActionButton from '../../components/FixedActionButton';
 
 function ShoppingListShow() {
@@ -28,7 +28,10 @@ function ShoppingListShow() {
           <h1>{currentShoppingList.shoppingListName}</h1>
           <br />
           {}
-          <div className="delete-link" onClick={() => dispatch(deleteMenu(id))}>
+          <div
+            className="delete-link"
+            onClick={() => dispatch(deleteShoppingList(id))}
+          >
             <p>Supprimer le menu</p>
           </div>
           <div className="space-behind-fixed-button"></div>
