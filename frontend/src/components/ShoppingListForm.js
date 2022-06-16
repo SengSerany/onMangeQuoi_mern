@@ -1,11 +1,22 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { createShoppingList } from '../features/shoppingList/shoppingListSlice';
+import { useLocation, useParams } from 'react-router-dom';
+import {
+  createShoppingList,
+  updateShoppingList,
+} from '../features/shoppingList/shoppingListSlice';
 
-function ShoppingListForm({ originMenu = 'none' }) {
+function ShoppingListForm({
+  originMenu = 'none',
+  currentShoppingList = 'none',
+}) {
   const location = useLocation();
   const dispatch = useDispatch();
+  const params = useParams();
+  let shopListID;
+  if (location.pathname.endsWith('edit')) {
+    shopListID = params.id;
+  }
   const actionBtnLabel = () => {
     if (location.pathname.endsWith('new')) {
       return 'Créer';
@@ -14,13 +25,22 @@ function ShoppingListForm({ originMenu = 'none' }) {
     }
   };
 
-  const initialFormData = {
-    shoppingListName:
-      originMenu !== 'none' ? `Liste de "${originMenu.menuName}"` : '',
+  const initialFormData = () => {
+    if (originMenu !== 'none') {
+      return {
+        shoppingListName: `Liste de "${originMenu.menuName}"`,
+      };
+    }
+    if (currentShoppingList !== 'none') {
+      return {
+        shoppingListName: currentShoppingList.shoppingListName,
+      };
+    }
+    return '';
   };
 
   const [buttonLabel] = useState(actionBtnLabel());
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(initialFormData());
   const { shoppingListName } = formData;
 
   const handleChange = (e) => {
@@ -35,7 +55,15 @@ function ShoppingListForm({ originMenu = 'none' }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createShoppingList(formData));
+    if (location.pathname.endsWith('new')) {
+      dispatch(createShoppingList(formData));
+    } else if (location.pathname.endsWith('edit')) {
+      const reqData = {
+        ...formData,
+        shoppingListId: shopListID,
+      };
+      dispatch(updateShoppingList(reqData));
+    }
   };
 
   return (

@@ -11,13 +11,13 @@ function InfosCharge() {
   const { shoppingLists } = useSelector((state) => state.shoppingList);
 
   useEffect(() => {
-    if (dishes && dishes.length === 0) {
+    if ((dishes && dishes.length === 0) || !dishes) {
       dispatch(indexDishes());
     }
-    if (menus && menus.length === 0) {
+    if ((menus && menus.length === 0) || !menus) {
       dispatch(indexMenus());
     }
-    if (shoppingLists && shoppingLists.length === 0) {
+    if ((shoppingLists && shoppingLists.length === 0) || !shoppingLists) {
       dispatch(indexShoppingLists());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

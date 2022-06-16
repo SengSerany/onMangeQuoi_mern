@@ -44,6 +44,23 @@ export const createShoppingList = createAsyncThunk(
   }
 );
 
+export const updateShoppingList = createAsyncThunk(
+  'shoppingList/update',
+  async (shoppingListData, thunkAPI) => {
+    try {
+      return await shoppingListService.updateShoppingLists(shoppingListData);
+    } catch (error) {
+      const shoppingListMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.shoppingListMessage) ||
+        error.shoppingListMessage ||
+        error.toString();
+      return thunkAPI.rejectWithValue(shoppingListMessage);
+    }
+  }
+);
+
 export const shoppingListSlice = createSlice({
   name: 'shoppingList',
   initialState,
@@ -81,6 +98,33 @@ export const shoppingListSlice = createSlice({
         state.shoppingListMessage = `Tu as crée une nouvelle liste de course : "${action.payload.shoppingList.shoppingListName}"`;
       })
       .addCase(createShoppingList.rejected, (state, action) => {
+        state.shoppingListLoading = false;
+        state.shoppingListError = true;
+        state.shoppingListMessage = action.payload;
+      })
+      .addCase(updateShoppingList.pending, (state) => {
+        state.shoppingListLoading = true;
+      })
+      .addCase(updateShoppingList.fulfilled, (state, action) => {
+        state.shoppingListLoading = false;
+        state.shoppingListSuccess = true;
+        state.shoppingLists = state.shoppingLists.map((shoppingList) => {
+          if (shoppingList._id === action.payload.updatedShoppingList._id) {
+            return action.payload.updatedShoppingList;
+          } else {
+            return shoppingList;
+          }
+        });
+
+        // state.itemsInLists = state.itemsInLists.filter(
+        //   (dishInShoppingList) => dishInShoppingList.shoppingListID !== action.payload.updatedShoppingList._id
+        // );
+
+        // state.itemsInLists.push(...action.payload.setDishes);
+
+        state.shoppingListMessage = `Tu as modifié la liste de course "${action.payload.updatedShoppingList.shoppingListName}"`;
+      })
+      .addCase(updateShoppingList.rejected, (state, action) => {
         state.shoppingListLoading = false;
         state.shoppingListError = true;
         state.shoppingListMessage = action.payload;
