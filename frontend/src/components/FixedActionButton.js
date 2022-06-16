@@ -17,7 +17,7 @@ function FixedActionButton({
     } else if (role === 'createShoppingList') {
       return `/shopping-list/new`;
     } else if (role === 'editShoppingList') {
-      return `/shopping-list/${currentID}/new`;
+      return `/shopping-list/${currentID}/edit`;
     } else {
       return '/';
     }

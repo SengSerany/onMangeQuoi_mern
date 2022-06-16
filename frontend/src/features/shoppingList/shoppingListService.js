@@ -14,9 +14,19 @@ const createNewShoppingLists = async (shoppingListData) => {
   return response.data;
 };
 
+// Update shoppingList
+const updateShoppingLists = async (shoppingListData) => {
+  const response = await axios.patch(
+    `${API_URL}/${shoppingListData.shoppingListId}/edit`,
+    shoppingListData
+  );
+  return response.data;
+};
+
 const shoppingListService = {
   getAllShoppingLists,
   createNewShoppingLists,
+  updateShoppingLists,
 };
 
 export default shoppingListService;

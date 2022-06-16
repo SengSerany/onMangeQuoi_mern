@@ -16,6 +16,7 @@ import MenuEdit from './pages/menu/MenuEdit';
 import ShoppingListIndex from './pages/shoppingList/ShoppingListIndex';
 import ShoppingListShow from './pages/shoppingList/ShoppingListShow';
 import ShoppingListNew from './pages/shoppingList/ShoppingListNew';
+import ShoppingListEdit from './pages/shoppingList/ShoppingListEdit';
 import AuthToasts from './components/AuthToasts';
 import DishToasts from './components/DishToasts';
 import MenuToasts from './components/MenuToasts';
@@ -47,6 +48,11 @@ function App() {
             <Route exact path="/menus/:id" element={<MenuShow />} />
             <Route exact path="/menus/new" element={<MenuNew />} />
             <Route exact path="/menus" element={<MenuIndex />} />
+            <Route
+              exact
+              path="/shopping-list/:id/edit"
+              element={<ShoppingListEdit />}
+            />
             <Route
               exact
               path="/shopping-list/:id"

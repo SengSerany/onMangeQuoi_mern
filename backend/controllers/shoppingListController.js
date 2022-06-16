@@ -54,10 +54,10 @@ const editShoppingList = asyncHandler(async (req, res) => {
 
 // Update
 const updateShoppingList = asyncHandler(async (req, res) => {
-  const currentShoppinglist = await ShoppingList.findById(req.params.id);
-  if (currentShoppinglist.authID.toString() === req.user._id.toString()) {
-    const updatedShoppinglist = await ShoppingList.findByIdAndUpdate(
-      currentShoppinglist._id,
+  const currentShoppingList = await ShoppingList.findById(req.params.id);
+  if (currentShoppingList.authID.toString() === req.user._id.toString()) {
+    const updatedShoppingList = await ShoppingList.findByIdAndUpdate(
+      currentShoppingList._id,
       req.body,
       {
         new: true,
@@ -66,7 +66,7 @@ const updateShoppingList = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       entre_point: 'Update shopping list',
-      updatedShoppinglist,
+      updatedShoppingList,
     });
   } else {
     res.redirect('/api/v1/shopping-list/?list=false');
