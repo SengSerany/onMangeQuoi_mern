@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
@@ -16,6 +17,71 @@ function ShoppingListShow() {
     ? shoppingLists.find((shoppingList) => shoppingList._id === id)
     : {};
 
+  let currentItemsList;
+  if (itemsInLists) {
+    currentItemsList = itemsInLists.filter(
+      (itemInList) => itemInList.shoppingListID === id
+    );
+  }
+
+  const initialItemsStatus = () => {
+    let statusArray = [];
+    if (itemsInLists) {
+      itemsInLists.forEach((item) => {
+        if (item.isShopped) {
+        }
+        statusArray.push(item.isShopped);
+      });
+    }
+    return statusArray;
+  };
+  const [itemsStatus, setItemsStatus] = useState(initialItemsStatus);
+
+  const translateUnits = (unitLabel) => {
+    let unitTrad;
+    switch (unitLabel) {
+      case 'unity':
+        unitTrad = 'unité';
+        break;
+      case 'soupeSpoon':
+        unitTrad = 'c. à s.';
+        break;
+      case 'coffeeSpoon':
+        unitTrad = 'c. à c.';
+        break;
+      case 'kilo':
+        unitTrad = 'kg';
+        break;
+      case 'gram':
+        unitTrad = 'g';
+        break;
+      case 'centigram':
+        unitTrad = 'cg';
+        break;
+      case 'liter':
+        unitTrad = 'litre';
+        break;
+      case 'centiliter':
+        unitTrad = 'cl';
+        break;
+      default:
+        unitLabel = '';
+    }
+    return unitTrad;
+  };
+
+  const handleItemsStatus = (event, indexComp) => {
+    setItemsStatus((prevItemsStatus) => {
+      return prevItemsStatus.map((state, indexInArray) => {
+        if (indexInArray === indexComp) {
+          return !state;
+        } else {
+          return state;
+        }
+      });
+    });
+  };
+
   if (shoppingListLoading) {
     return <Spinner />;
   }
@@ -27,7 +93,34 @@ function ShoppingListShow() {
           <p className="color-grey1 no-margin text-center">liste de course :</p>
           <h1>{currentShoppingList.shoppingListName}</h1>
           <br />
-          {}
+          <div className="shopping-control">
+            {currentItemsList && currentItemsList.length > 0 ? (
+              currentItemsList.map((currentItemInList, index) => {
+                return (
+                  <button
+                    key={currentItemInList._id}
+                    type="button"
+                    className={itemsStatus[index] ? 'shopped' : 'unshopped'}
+                    onClick={(e) => handleItemsStatus(e, index)}
+                  >{`${currentItemInList.shopItemName} (${
+                    currentItemInList.shopItemQuantity +
+                    ' ' +
+                    translateUnits(currentItemInList.shopItemUnit)
+                  })`}</button>
+                );
+              })
+            ) : (
+              <div className="flex-column text-center">
+                <p>Vous avez 0 produit dans cette liste de course...</p>
+                <p>
+                  Ajoutez des produits en{' '}
+                  <strong>modifiant la liste de course</strong> ou en passant{' '}
+                  <strong>par les menus</strong> ou <strong>les plats</strong>{' '}
+                  directement !{' '}
+                </p>
+              </div>
+            )}
+          </div>
           <div
             className="delete-link"
             onClick={() => dispatch(deleteShoppingList(id))}

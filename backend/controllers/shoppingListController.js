@@ -1,10 +1,35 @@
 const asyncHandler = require('express-async-handler');
 const ShoppingList = require('../models/shoppingListModel');
+const ShopItem = require('../models/shopItemModel');
 
 // Index
 const indexShoppingLists = asyncHandler(async (req, res) => {
   const shoppingLists = await ShoppingList.find({ authID: req.user._id });
-  res.status(200).json({ endpoint: 'index shopping list', shoppingLists });
+
+  const mapShopItemsUser = async () => {
+    let itemsList = [];
+
+    for (let i = 0; i < shoppingLists.length; i++) {
+      const currentListItems = await ShopItem.find({
+        shoppingListID: shoppingLists[i]._id,
+      });
+      if (currentListItems.length > 0) {
+        itemsList.push(...currentListItems);
+      }
+    }
+
+    return itemsList;
+  };
+
+  const AllItemsList = await mapShopItemsUser();
+
+  res
+    .status(200)
+    .json({
+      endpoint: 'index shopping list',
+      shoppingLists,
+      itemsList: AllItemsList,
+    });
 });
 
 // Show
@@ -26,7 +51,8 @@ const newShoppingList = asyncHandler(async (req, res) => {
 
 // Create
 const createShoppingList = asyncHandler(async (req, res) => {
-  const { shoppingListName } = req.body;
+  let shopItemsList = [];
+  const { shoppingListName, items } = req.body;
   if (!shoppingListName) {
     res.status(400);
     throw new Error('A name for the shopping list must be assign');
@@ -37,7 +63,24 @@ const createShoppingList = asyncHandler(async (req, res) => {
     authID: req.user._id,
   });
 
-  res.status(200).json({ endpoint: 'create shopping list', shoppingList });
+  if (items) {
+    for (let i = 0; i < items.length; i++) {
+      const shopItem = await ShopItem.create({
+        shoppingListID: shoppingList._id,
+        shopItemType: items[i].shopItemType,
+        shopItemName: items[i].shopItemName,
+        shopItemQuantity: items[i].shopItemQuantity,
+        shopItemUnit: items[i].shopItemUnit,
+      });
+      shopItemsList.push(shopItem);
+    }
+  }
+
+  res.status(200).json({
+    endpoint: 'create shopping list',
+    shoppingList,
+    itemsList: shopItemsList,
+  });
 });
 
 // Edit
