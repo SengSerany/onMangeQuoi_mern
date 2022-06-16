@@ -16,6 +16,7 @@ function ShoppingListForm({
   const params = useParams();
   const { dishesInMenu } = useSelector((state) => state.menu);
   const { dishes } = useSelector((state) => state.dish);
+  const { itemsInLists } = useSelector((state) => state.shoppingList);
 
   let shopListID;
   if (location.pathname.endsWith('edit')) {
@@ -47,6 +48,10 @@ function ShoppingListForm({
         });
       })
       .flat();
+  } else if (location.pathname.endsWith('edit')) {
+    itemsFromMenu = itemsInLists.filter(
+      (itemInThisList) => itemInThisList.shoppingListID === params.id
+    );
   }
 
   const actionBtnLabel = () => {
@@ -119,6 +124,7 @@ function ShoppingListForm({
       const reqData = {
         ...formData,
         shoppingListId: shopListID,
+        items: items,
       };
       dispatch(updateShoppingList(reqData));
     }
@@ -131,7 +137,7 @@ function ShoppingListForm({
   };
 
   const log = () => {
-    console.log(itemsFromMenu);
+    console.log(itemsInLists);
   };
 
   return (
