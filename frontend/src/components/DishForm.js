@@ -135,6 +135,8 @@ function DishForm({
                 <input
                   required
                   type="number"
+                  min="0"
+                  step=".01"
                   className=""
                   name="quantity"
                   value={ingredientInput.quantity}

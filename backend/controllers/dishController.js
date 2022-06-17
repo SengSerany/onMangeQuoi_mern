@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Dish = require('../models/dishModel');
+const Menu = require('../models/menuModel');
 
 // Index
 const indexDishes = asyncHandler(async (req, res) => {
@@ -68,6 +69,7 @@ const updateDish = asyncHandler(async (req, res) => {
 const deleteDish = asyncHandler(async (req, res) => {
   const currentDish = await Dish.findById(req.params.id);
   if (currentDish.authID.toString() === req.user._id.toString()) {
+    await Menu.deleteMany({ dishID: currentDish._id });
     currentDish.remove();
     res.status(200).json({
       entre_point: 'Delete dish',

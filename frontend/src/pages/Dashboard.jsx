@@ -26,7 +26,7 @@ function Dashboard() {
       <InfosCharge />
       <div className="page-container">
         <div className="flex-column justify-center dashboard-menu">
-          <h1>Dashboard</h1>
+          <h1>Acceuil</h1>
           <br />
           <Link to="/dishes" className="section-category">
             <p>Mes plats</p>
