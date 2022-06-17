@@ -202,6 +202,7 @@ function ShoppingListForm({
                   required
                   type="number"
                   min="0"
+                  step=".01"
                   className=""
                   name="shopItemQuantity"
                   value={itemsInput.shopItemQuantity}

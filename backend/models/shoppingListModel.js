@@ -11,6 +11,10 @@ const ShoppingListSchema = new mongoose.Schema(
       type: String,
       required: [true, 'You must add a name to the shopping list'],
     },
+    isDone: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

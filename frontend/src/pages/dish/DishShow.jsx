@@ -50,6 +50,9 @@ function DishShow() {
       case 'centiliter':
         unitTrad = 'cl';
         break;
+      case '':
+        unitTrad = '';
+        break;
       default:
         unitLabel = '';
     }

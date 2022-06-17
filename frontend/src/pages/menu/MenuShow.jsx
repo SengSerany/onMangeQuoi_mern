@@ -29,7 +29,7 @@ function MenuShow() {
           <p className="color-grey1 no-margin text-center">menu :</p>
           <h1>{currentMenu.menuName}</h1>
           <br />
-          {attributeDishes &&
+          {attributeDishes && attributeDishes.length !== 0 ? (
             attributeDishes.map((linkInfos) => {
               const currentDish = dishes.find(
                 (dish) => dish._id === linkInfos.dishID
@@ -41,7 +41,16 @@ function MenuShow() {
                   forNbPeople={linkInfos.forNbPeople}
                 />
               );
-            })}
+            })
+          ) : (
+            <div className="flex-column text-center">
+              <p>Vous avez 0 plat dans ce menu...</p>
+              <p>
+                Ajoutez des produits en <strong>modifiant le menu</strong> ou en
+                passant par <strong>les plats</strong> directement !{' '}
+              </p>
+            </div>
+          )}
           <div className="delete-link" onClick={() => dispatch(deleteMenu(id))}>
             <p>Supprimer le menu</p>
           </div>

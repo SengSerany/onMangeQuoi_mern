@@ -28,7 +28,7 @@ function Profile() {
         <h3>Votre adresse email</h3>
         <p>{user.email}</p>
         <br />
-        <AuthRedirectButton use="edit" />
+        {/* <AuthRedirectButton use="edit" /> */}
         <AuthRedirectButton use="logout" />
       </div>
     </div>
