@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 require('dotenv').config();
@@ -45,6 +46,19 @@ app.use('/api/v1/menu', menuRouter);
 app.use('/api/v1/dish', dishRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/menu-of-dish', menuOfDishRouter);
+
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+    )
+  );
+} else {
+  app.get('/', (req, res) => res.send('Please set app to production mode'));
+}
 
 // Session
 passport.use(Auth.createStrategy());
