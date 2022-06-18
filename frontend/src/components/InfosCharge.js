@@ -12,6 +12,7 @@ function InfosCharge() {
   const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
+    // must use state because new user have no data and result a loop
     if (isRead) return;
     setIsRead(true);
 
