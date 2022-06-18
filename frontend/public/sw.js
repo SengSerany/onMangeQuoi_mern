@@ -19,7 +19,7 @@ self.addEventListener('install', (event) => {
       );
     })()
   );
-  console.log(`${PREFIX} Install`);
+  // console.log(`${PREFIX} Install`);
 });
 
 self.addEventListener('activate', (event) => {
@@ -39,13 +39,13 @@ self.addEventListener('activate', (event) => {
       );
     })()
   );
-  console.log(`${PREFIX} Active`);
+  // console.log(`${PREFIX} Active`);
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log(
-    `${PREFIX} Fetch: ${event.request.url}, Mode: ${event.request.mode}`
-  );
+  // console.log(
+  //   `${PREFIX} Fetch: ${event.request.url}, Mode: ${event.request.mode}`
+  // );
   if (event.request.mode === 'navigate') {
     event.respondWith(
       (async () => {

@@ -28,10 +28,19 @@ function DishIndex() {
         <div className="flex-column">
           <h1>Mes plats</h1>
           <br />
-          {dishes !== null &&
+          {dishes.length > 0 ? (
             dishes.map((dishInfos) => (
               <DishCardIndex key={dishInfos._id} dish={dishInfos} />
-            ))}
+            ))
+          ) : (
+            <div className="flex-column text-center">
+              <p>Vous avez 0 plats...</p>
+              <p>
+                Ajoutez des plats avec{' '}
+                <strong>le bouton "Ajouter un nouveau plat"</strong> !{' '}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       <FixedActionButton

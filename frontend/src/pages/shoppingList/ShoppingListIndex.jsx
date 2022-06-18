@@ -30,13 +30,23 @@ function ShoppingListIndex() {
         <div className="flex-column">
           <h1>Mes listes de course</h1>
           <br />
-          {shoppingLists &&
+          {shoppingLists.length > 0 ? (
             shoppingLists.map((shoppingList) => (
               <ShoppingListCardIndex
                 key={shoppingList._id}
                 shoppingList={shoppingList}
               />
-            ))}
+            ))
+          ) : (
+            <div className="flex-column text-center">
+              <p>Vous avez 0 liste de course...</p>
+              <p>
+                Ajoutez des listes de course avec{' '}
+                <strong>le bouton "Créer une nouvelle liste de course"</strong>{' '}
+                ou en passant <strong>par les menus</strong> directement !{' '}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       <FixedActionButton

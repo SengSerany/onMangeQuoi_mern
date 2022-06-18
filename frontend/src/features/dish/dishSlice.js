@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import dishService from './dishService';
 
 const initialState = {
-  dishes: [],
+  dishes: null,
   dishError: false,
   dishSuccess: false,
   dishLoading: false,
@@ -87,6 +87,7 @@ export const dishSlice = createSlice({
       state.dishLoading = false;
       state.dishMessage = '';
     },
+    logoutDishState: () => initialState,
   },
   extraReducers: (builder) =>
     builder
@@ -94,7 +95,7 @@ export const dishSlice = createSlice({
         state.dishLoading = true;
       })
       .addCase(indexDishes.fulfilled, (state, action) => {
-        state.dishes = action.payload.dishes;
+        state.dishes = action.payload.dishes ? action.payload.dishes : [];
         state.dishLoading = false;
       })
       .addCase(indexDishes.rejected, (state, action) => {
@@ -154,6 +155,6 @@ export const dishSlice = createSlice({
       }),
 });
 
-export const { resetDishState } = dishSlice.actions;
+export const { resetDishState, logoutDishState } = dishSlice.actions;
 
 export default dishSlice.reducer;

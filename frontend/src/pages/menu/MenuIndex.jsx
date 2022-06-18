@@ -28,10 +28,20 @@ function MenuIndex() {
         <div className="flex-column">
           <h1>Mes Menus</h1>
           <br />
-          {menus.length !== 0 &&
+          {menus.length > 0 ? (
             menus.map((menuInfos) => (
               <MenuCardIndex key={menuInfos._id} menu={menuInfos} />
-            ))}
+            ))
+          ) : (
+            <div className="flex-column text-center">
+              <p>Vous avez 0 menu...</p>
+              <p>
+                Ajoutez des menu avec{' '}
+                <strong>le bouton "Créer un nouveau menu"</strong> ou en passant{' '}
+                <strong>par les plats</strong> directement !{' '}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       <FixedActionButton

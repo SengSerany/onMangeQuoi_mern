@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import shoppingListService from './shoppingListService';
 
 const initialState = {
-  shoppingLists: [],
-  itemsInLists: [],
+  shoppingLists: null,
+  itemsInLists: null,
   shoppingListError: false,
   shoppingListSuccess: false,
   shoppingListLoading: false,
@@ -105,6 +105,7 @@ export const shoppingListSlice = createSlice({
       state.shoppingListLoading = false;
       state.shoppingListMessage = '';
     },
+    logoutShoppingListState: () => initialState,
   },
   extraReducers: (builder) =>
     builder
@@ -112,8 +113,12 @@ export const shoppingListSlice = createSlice({
         state.shoppingListLoading = true;
       })
       .addCase(indexShoppingLists.fulfilled, (state, action) => {
-        state.shoppingLists = action.payload.shoppingLists;
-        state.itemsInLists = action.payload.itemsList;
+        state.shoppingLists = action.payload.shoppingLists
+          ? action.payload.shoppingLists
+          : [];
+        state.itemsInLists = action.payload.itemsList
+          ? action.payload.itemsList
+          : [];
         state.shoppingListLoading = false;
       })
       .addCase(indexShoppingLists.rejected, (state, action) => {
@@ -207,6 +212,7 @@ export const shoppingListSlice = createSlice({
       }),
 });
 
-export const { resetShoppingListState } = shoppingListSlice.actions;
+export const { resetShoppingListState, logoutShoppingListState } =
+  shoppingListSlice.actions;
 
 export default shoppingListSlice.reducer;

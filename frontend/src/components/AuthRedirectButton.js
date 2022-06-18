@@ -1,6 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
+import { logoutShoppingListState } from '../features/shoppingList/shoppingListSlice';
+import { logoutMenuState } from '../features/menu/menuSlice';
+import { logoutDishState } from '../features/dish/dishSlice';
 
 function AuthRedirectButton({ use = 'switch' }) {
   const dispatch = useDispatch();
@@ -11,7 +14,12 @@ function AuthRedirectButton({ use = 'switch' }) {
     return (
       <button
         className="btn-profile btn-disconnect"
-        onClick={() => dispatch(logout())}
+        onClick={() => {
+          dispatch(logout());
+          dispatch(logoutShoppingListState());
+          dispatch(logoutMenuState());
+          dispatch(logoutDishState());
+        }}
       >
         Se déconnecter
       </button>

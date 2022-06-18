@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import menuService from './menuService';
 
 const initialState = {
-  menus: [],
-  dishesInMenu: [],
+  menus: null,
+  dishesInMenu: null,
   menuError: false,
   menuSuccess: false,
   menuLoading: false,
@@ -105,6 +105,7 @@ export const menuSlice = createSlice({
       state.menuLoading = false;
       state.menuMessage = '';
     },
+    logoutMenuState: () => initialState,
   },
   extraReducers: (builder) =>
     builder
@@ -112,8 +113,10 @@ export const menuSlice = createSlice({
         state.menuLoading = true;
       })
       .addCase(indexMenus.fulfilled, (state, action) => {
-        state.menus = action.payload.menus;
-        state.dishesInMenu = action.payload.menusOfDishes;
+        state.menus = action.payload.menus ? action.payload.menus : [];
+        state.dishesInMenu = action.payload.menusOfDishes
+          ? action.payload.menusOfDishes
+          : [];
         state.menuLoading = false;
       })
       .addCase(indexMenus.rejected, (state, action) => {
@@ -198,6 +201,6 @@ export const menuSlice = createSlice({
       }),
 });
 
-export const { resetMenuState } = menuSlice.actions;
+export const { resetMenuState, logoutMenuState } = menuSlice.actions;
 
 export default menuSlice.reducer;
