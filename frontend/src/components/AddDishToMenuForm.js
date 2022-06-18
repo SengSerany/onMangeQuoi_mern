@@ -30,13 +30,8 @@ function AddDishToMenuForm() {
     dispatch(addDishToMenu(formData));
   };
 
-  const log = () => {
-    console.log(formData);
-  };
-
   return (
     <>
-      <button onClick={log}>LOG</button>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Dans quel menu ?</label>

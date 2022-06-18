@@ -131,12 +131,8 @@ function MenuForm({ currentMenu = { menuName: '', dishesInMenu: [] } }) {
     }
   };
 
-  const log = () => {
-    console.log(isChecked);
-  };
   return (
     <>
-      <button onClick={log}>LOG</button>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Nom du menu</label>

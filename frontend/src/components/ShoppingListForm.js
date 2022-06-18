@@ -145,13 +145,8 @@ function ShoppingListForm({
     });
   };
 
-  const log = () => {
-    console.log(itemsInLists);
-  };
-
   return (
     <div>
-      <button onClick={log}>LOG</button>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label>Nom de la liste de course</label>
